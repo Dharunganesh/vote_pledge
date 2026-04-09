@@ -8,9 +8,9 @@ function Navbar() {
         <>
             {/* DESKTOP NAVBAR */}
             <div className='hidden md:flex justify-between items-center px-6 py-6 shadow'>
-                <div className='flex items-center gap-2 text-2xl'>
-                    <BsBank size={25} />
-                    <h1>Ranipet District</h1>
+                <div className='flex items-center gap-2 text-xl'>
+                    <BsBank size={28} />
+                    <h1>இராணிப்பேட்டை மாவட்டம் / Ranipet District</h1>
                 </div>
 
                 <div className='flex gap-8 text-lg'>
@@ -21,9 +21,9 @@ function Navbar() {
             </div>
 
             {/* MOBILE NAVBAR */}
-            <div className='md:hidden flex items-center gap-3 text-2xl px-4 py-4 bg-white'>
+            <div className='md:hidden flex items-center gap-3 text-xl px-4 py-4 bg-white'>
                 <BsBank size={28} />
-                <h1>Ranipet District</h1>
+                <h1>இராணிப்பேட்டை மாவட்டம் / Ranipet District</h1>
             </div>
 
             {/* BOTTOM NAVBAR */}
