@@ -1,7 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsBank } from "react-icons/bs";
+import { useNavigate } from "react-router-dom"
+
 export default function OTPVerification({ phoneNumber }) {
   const inputsRef = useRef([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const inputs = inputsRef.current;
@@ -38,7 +41,7 @@ export default function OTPVerification({ phoneNumber }) {
       const data = await res.json();
 
       if (data.success) {
-        alert("OTP Verified ✅");
+        navigate("userDetails")
       } else {
         alert("Invalid OTP ❌");
       }
