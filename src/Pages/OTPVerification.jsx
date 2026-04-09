@@ -1,7 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsBank } from "react-icons/bs";
+import { useNavigate } from "react-router-dom"
+
 export default function OTPVerification({ phoneNumber }) {
   const inputsRef = useRef([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const inputs = inputsRef.current;
@@ -38,7 +41,7 @@ export default function OTPVerification({ phoneNumber }) {
       const data = await res.json();
 
       if (data.success) {
-        alert("OTP Verified ✅");
+        navigate("userDetails")
       } else {
         alert("Invalid OTP ❌");
       }
@@ -117,9 +120,6 @@ export default function OTPVerification({ phoneNumber }) {
 
             {/* Resend */}
             <div className="text-center">
-              <p className="text-on-surface-variant text-sm mb-2">
-                குறியீடு வரவில்லையா? / Didn't receive code?
-              </p>
               <button
                 onClick={handleResend}
                 className="text-primary font-bold hover:underline decoration-primary decoration-2 underline-offset-4 transition-all"
