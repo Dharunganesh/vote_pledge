@@ -3,7 +3,7 @@ import React from 'react'
 function Login() {
     return (
         <div>
-            hello dharun
+            <h1>Ranipet District</h1>
         </div>
     )
 }
