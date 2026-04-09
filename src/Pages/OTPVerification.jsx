@@ -21,7 +21,7 @@ export default function OTPVerification({ phoneNumber }) {
       otp += input.value;
     });
 
-    const phone = localStorage.getItem("phone");
+    const phone = `+91${phoneNumber}`;
 
     try {
       const res = await fetch(
