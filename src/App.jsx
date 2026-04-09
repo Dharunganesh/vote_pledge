@@ -7,7 +7,7 @@ const App = () => {
   const userName = "ARUL SELVAN";
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center sm:py-10">
+    <div className="min-h-screen bg-orange-50 flex justify-center sm:py-10">
       <div className="w-full max-w-[430px] bg-white min-h-screen sm:min-h-[850px] shadow-2xl flex flex-col overflow-hidden">
         
         {screen === "pledge" && (

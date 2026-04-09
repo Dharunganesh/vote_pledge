@@ -1,11 +1,11 @@
 const SuccessScreen = ({ userName, onHome }) => {
   return (
-    <div className="flex flex-col flex-1 pb-10 bg-gray-50">
+    <div className="flex flex-col flex-1 pb-10 bg-orange-50">
 
       {/* Header */}
       <header className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3">
-        <div className="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center">
-          <svg viewBox="0 0 24 24" className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" strokeWidth="2">
+        <div className="w-9 h-9 bg-orange-100 rounded-lg flex items-center justify-center">
+          <svg viewBox="0 0 24 24" className="w-5 h-5 text-orange-700" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="3" y="3" width="7" height="7" />
             <rect x="14" y="3" width="7" height="7" />
             <rect x="3" y="14" width="7" height="7" />
@@ -36,7 +36,7 @@ const SuccessScreen = ({ userName, onHome }) => {
 
         {/* Certificate */}
         <div className="w-full bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-          <div className="h-2 bg-blue-900"></div>
+          <div className="h-2 bg-orange-700"></div>
 
           <div className="p-5 space-y-3 text-center">
             <p className="text-[10px] text-gray-400 uppercase tracking-widest">
@@ -52,14 +52,14 @@ const SuccessScreen = ({ userName, onHome }) => {
             </p>
 
             <div className="flex justify-center pt-3">
-              <div className="w-14 h-14 bg-gray-100 rounded-md"></div>
+              <div className="w-14 h-14 bg-orange-100 rounded-md"></div>
             </div>
           </div>
         </div>
 
         {/* Buttons */}
         <div className="w-full space-y-3 pt-2">
-          <button className="w-full bg-blue-900 text-white py-4 rounded-xl font-semibold shadow">
+          <button className="w-full bg-orange-700 text-white py-4 rounded-xl font-semibold shadow">
             Download Certificate
           </button>
 
@@ -73,24 +73,6 @@ const SuccessScreen = ({ userName, onHome }) => {
           >
             Back to Home
           </button>
-        </div>
-
-        {/* Stats */}
-        <div className="w-full pt-6 space-y-3">
-          <div className="bg-white rounded-xl p-4 shadow text-center">
-            <p className="text-xl font-bold">12,840+</p>
-            <p className="text-xs text-gray-500">Total pledges today</p>
-          </div>
-
-          <div className="bg-white rounded-xl p-4 shadow text-center">
-            <p className="text-xl font-bold">45%</p>
-            <p className="text-xs text-gray-500">Goal Progress</p>
-          </div>
-
-          <div className="bg-white rounded-xl p-4 shadow text-center">
-            <p className="text-blue-600 font-semibold">Top 3</p>
-            <p className="text-xs text-gray-500">Ranipet rank in TN</p>
-          </div>
         </div>
 
       </main>

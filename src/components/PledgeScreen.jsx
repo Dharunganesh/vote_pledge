@@ -1,4 +1,5 @@
 import { useState } from "react";
+import mascotImg from "../assets/deer.jpeg";
 
 const PledgeScreen = ({ onSubmit }) => {
   const [checked1, setChecked1] = useState(false);
@@ -15,12 +16,12 @@ const PledgeScreen = ({ onSubmit }) => {
   };
 
   return (
-    <div className="flex flex-col flex-1 pb-24 bg-gray-50">
+    <div className="flex flex-col flex-1 pb-24 bg-orange-50">
       
       {/* Header */}
       <header className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3">
-        <div className="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center">
-          <svg viewBox="0 0 24 24" className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" strokeWidth="2">
+        <div className="w-9 h-9 bg-orange-100 rounded-lg flex items-center justify-center">
+          <svg viewBox="0 0 24 24" className="w-5 h-5 text-orange-700" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="3" y="3" width="7" height="7" />
             <rect x="14" y="3" width="7" height="7" />
             <rect x="3" y="14" width="7" height="7" />
@@ -38,37 +39,34 @@ const PledgeScreen = ({ onSubmit }) => {
         {/* Title */}
         <div>
           <h1 className="text-2xl font-bold text-gray-900">வாக்காளர் உறுதிமொழி</h1>
-          <h2 className="text-lg font-semibold text-blue-700">Voter Pledge</h2>
+          <h2 className="text-lg font-semibold text-orange-600">Voter Pledge</h2>
         </div>
 
         {/* Description */}
-        <div className="border-l-2 border-gray-300 pl-3">
+        <div className="border-l-2 border-orange-300 pl-3">
           <p className="text-gray-600 text-sm">
             Elections are the foundation of democracy. Your vote is your right and responsibility.
           </p>
         </div>
 
-        {/* Mascot */}
+        {/* ✅ Mascot (Top Half Only, No Text) */}
         <div className="flex justify-center">
-          <div className="relative w-[260px] rounded-xl overflow-hidden shadow-md">
+          <div className="w-[260px] h-[230px] rounded-2xl overflow-hidden shadow-md border border-orange-200">
             <img
-              src="https://images.unsplash.com/photo-1541873676947-9ea5d8a31ad2?w=400"
-              className="w-full h-full object-cover"
+              src={mascotImg}
+              alt="Mascot"
+              className="w-full h-full object-cover object-top"
             />
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-white px-3 py-1 rounded-full text-[10px] font-semibold shadow">
-              AWARENESS MASCOT
-            </div>
           </div>
         </div>
 
         {/* Commitment Card */}
-        <div className="bg-gray-100 rounded-3xl p-5 shadow-inner space-y-4">
+        <div className="bg-white rounded-3xl p-5 shadow-md space-y-4">
 
           <div className="text-center">
             <h3 className="text-lg font-bold">Digital Commitment</h3>
           </div>
 
-          {/* Checkbox Items */}
           {[
             {
               state: checked1,
@@ -112,7 +110,7 @@ const PledgeScreen = ({ onSubmit }) => {
           {/* Submit */}
           <button
             onClick={handleSubmit}
-            className="w-full bg-gradient-to-r from-green-900 to-blue-900 text-white py-4 rounded-full font-semibold shadow-lg active:scale-95 transition"
+            className="w-full bg-gradient-to-r from-orange-600 to-orange-800 text-white py-4 rounded-full font-semibold shadow-lg active:scale-95 transition"
           >
             உறுதிமொழி சமர்ப்பிக்கவும் / Submit Pledge
           </button>
@@ -127,7 +125,7 @@ const PledgeScreen = ({ onSubmit }) => {
                 cx="50"
                 cy="50"
                 r="40"
-                stroke="#064e3b"
+                stroke="#ea580c"
                 strokeWidth="6"
                 fill="none"
                 strokeDasharray="251"
