@@ -117,9 +117,6 @@ export default function OTPVerification({ phoneNumber }) {
 
             {/* Resend */}
             <div className="text-center">
-              <p className="text-on-surface-variant text-sm mb-2">
-                குறியீடு வரவில்லையா? / Didn't receive code?
-              </p>
               <button
                 onClick={handleResend}
                 className="text-primary font-bold hover:underline decoration-primary decoration-2 underline-offset-4 transition-all"
