@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function OTPVerification() {
+export default function OTPVerification({ phoneNumber }) {
   const inputsRef = useRef([]);
 
   useEffect(() => {
