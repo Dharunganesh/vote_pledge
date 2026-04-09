@@ -10,7 +10,11 @@ function App() {
 
     const submitPhoneNumber = () => {
         const regex = /[^0-9]/g
-        if (phoneNumber.length < 10 || regex.test(phoneNumber)) alert("தயவுசெய்து சரியான மொபைல் எண்ணை உள்ளிடவும்")
+        if (phoneNumber.length < 10 || regex.test(phoneNumber)) {
+            alert("தயவுசெய்து சரியான மொபைல் எண்ணை உள்ளிடவும்")
+            return
+        }
+
         setShowOtp(true)
     }
 
