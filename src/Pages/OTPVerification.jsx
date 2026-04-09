@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-
+import { BsBank } from "react-icons/bs";
 export default function OTPVerification({ phoneNumber }) {
   const inputsRef = useRef([]);
 
@@ -70,9 +70,7 @@ export default function OTPVerification({ phoneNumber }) {
       {/* Header */}
       <header className="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-xl shadow-sm flex items-center justify-between px-6 h-16">
         <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-[#001d44]">
-            account_balance
-          </span>
+          <BsBank size={30} />
           <h1 className="text-lg font-bold text-[#001d44] font-headline tracking-tight">
             இராணிப்பேட்டை மாவட்டம் / Ranipet District
           </h1>
@@ -80,16 +78,8 @@ export default function OTPVerification({ phoneNumber }) {
       </header>
 
       {/* Main */}
-      <main className="flex-grow flex items-center justify-center px-4 pt-24 pb-12">
+      <main className="grow flex items-center justify-center px-4 pt-24 pb-12">
         <div className="max-w-md w-full">
-          {/* Icon */}
-          <div className="flex justify-center mb-8">
-            <div className="w-20 h-20 bg-secondary-container rounded-full flex items-center justify-center">
-              <span className="material-symbols-outlined text-primary text-4xl">
-                cell_tower
-              </span>
-            </div>
-          </div>
 
           {/* Title */}
           <div className="text-center mb-10">
@@ -120,12 +110,9 @@ export default function OTPVerification({ phoneNumber }) {
             {/* Verify Button */}
             <button
               onClick={handleVerify}
-              className="w-full py-4 rounded-xl bg-gradient-to-br from-[#001d44] to-[#00326b] text-white font-semibold text-lg shadow-[0px_12px_32px_rgba(25,28,29,0.1)] active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
+              className="w-full py-4 rounded-xl bg-orange-600 text-white font-semibold text-lg shadow-[0px_12px_32px_rgba(25,28,29,0.1)] active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
             >
               <span>சரிபார்க்கவும் / Verify OTP</span>
-              <span className="material-symbols-outlined">
-                arrow_forward
-              </span>
             </button>
 
             {/* Resend */}
@@ -144,16 +131,13 @@ export default function OTPVerification({ phoneNumber }) {
 
           {/* Info */}
           <div className="mt-12 p-6 bg-surface-container-low rounded-xl flex items-start gap-4">
-            <span className="material-symbols-outlined text-secondary-container bg-primary rounded-full p-1">
-              verified_user
-            </span>
             <div>
               <h4 className="font-bold text-primary text-sm">
                 பாதுகாப்பான சரிபார்ப்பு / Secure Verification
               </h4>
-              <p className="text-xs text-on-secondary-container mt-1 tamil-text">
+              <p className="text-sm text-on-secondary-container mt-1 tamil-text">
                 உங்கள் வாக்காளர் உறுதிமொழியை உறுதிப்படுத்த இந்த 6-இலக்க குறியீடு
-                அவசியமானது. This code is required to finalize your digital voter
+                அவசியமானது. <br /> This code is required to finalize your digital voter
                 pledge.
               </p>
             </div>
