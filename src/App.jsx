@@ -18,7 +18,8 @@ function App() {
         <div>
             {!showOtp ?
                 <Login phoneNumber={phoneNumber} setPhoneNumber={setPhoneNumber} submitPhoneNumber={submitPhoneNumber} />
-                : <OTPVerification />}
+                : <OTPVerification phoneNumber={phoneNumber} />
+            }
         </div>
     )
 }
