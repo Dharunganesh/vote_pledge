@@ -50,17 +50,21 @@ function Login() {
 
                 </div>
             </div>
-            <div className='flex items-center justify-between'>
-                        <p className='mt-5 text-center'>
-                            VOTER HELPLINE <br />
-                            <span className='text-red-500 font-extrabold'>1950</span>
-                        </p>
+            <div className='absolute bottom-2 left-0 w-full px-5'>
+    <div className='flex items-center justify-between rounded-xl shadow px-4 py-3'>
 
-                        <p className='mt-5 text-center'>
-                            OFFICIAL PORTAL<br />
-                            <span className='text-black font-bold'>Govt of Tamil Nadu</span>
-                        </p>
-                    </div>
+        <p className='text-center text-sm'>
+            VOTER HELPLINE <br />
+            <span className='text-red-500 font-extrabold'>1950</span>
+        </p>
+
+        <p className='text-center text-sm'>
+            OFFICIAL PORTAL<br />
+            <span className='text-black font-bold'>Govt of Tamil Nadu</span>
+        </p>
+
+    </div>
+</div>
         </div>
     )
 }
