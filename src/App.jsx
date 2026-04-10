@@ -10,13 +10,11 @@ function App() {
 
     return (
         <>
-            <BrowserRouter>
-                <Routes>
-                    <Route path='/' element={<LoginWrapper phoneNumber={phoneNumber} setPhoneNumber={setPhoneNumber} />} />
-                    <Route path='/otp' element={<OTPVerification phoneNumber={phoneNumber} />} />
-                    <Route path='/userDetails' element={<UserDetails />} />
-                </Routes>
-            </BrowserRouter>
+            <Routes>
+                <Route path='/' element={<LoginWrapper phoneNumber={phoneNumber} setPhoneNumber={setPhoneNumber} />} />
+                <Route path='/otp' element={<OTPVerification phoneNumber={phoneNumber} />} />
+                <Route path='/userDetails' element={<UserDetails />} />
+            </Routes>
         </>
     )
 }
