@@ -12,7 +12,7 @@ function Login() {
     }
 
     return (
-        <div className='min-h-screen bg-neutral-200 flex flex-col relative'>
+        <div className='min-h-screen bg-neutral-200 flex flex-col relative pb-20'>
             
             <Navbar />
 
@@ -55,7 +55,7 @@ function Login() {
             </div>
 
             {/* Bottom Section (Above Navbar) */}
-            <div className='w-full px-5 mb-16'>
+            <div className='w-full px-5 mb-4'>
                 <div className='flex items-center justify-between'>
 
                     <p className='text-center text-sm'>
