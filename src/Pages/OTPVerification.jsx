@@ -41,7 +41,8 @@ export default function OTPVerification({ phoneNumber }) {
       const data = await res.json();
 
       if (data.success) {
-        navigate("userDetails")
+        alert("OTP Verified ✅");
+        navigate("/userDetails")
       } else {
         alert("Invalid OTP ❌");
       }
