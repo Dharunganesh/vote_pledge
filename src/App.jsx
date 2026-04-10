@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import OTPVerification from './Pages/OTPVerification'
 import LoginWrapper from './Components/LoginWrapper'
-import UserDetails from './Pages/userDetails'
+import UserDetails from './Pages/UserDetails'
 import './App.css'
 
 function App() {
