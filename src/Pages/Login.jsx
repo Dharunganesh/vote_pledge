@@ -12,7 +12,7 @@ function Login() {
     }
 
     return (
-        <div className='min-h-screen bg-neutral-200 flex flex-col relative pb-20'>
+        <div className='min-h-screen bg-neutral-200 flex flex-col relative pb-28'>
             
             <Navbar />
 
