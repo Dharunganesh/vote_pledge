@@ -48,7 +48,9 @@ function Login() {
                         உள்ள்நுழைக / Enter
                     </button>
 
-                    <div className='flex items-center justify-between'>
+                </div>
+            </div>
+            <div className='flex items-center justify-between'>
                         <p className='mt-5 text-center'>
                             VOTER HELPLINE <br />
                             <span className='text-red-500 font-extrabold'>1950</span>
@@ -59,9 +61,6 @@ function Login() {
                             <span className='text-black font-bold'>Govt of Tamil Nadu</span>
                         </p>
                     </div>
-
-                </div>
-            </div>
         </div>
     )
 }
