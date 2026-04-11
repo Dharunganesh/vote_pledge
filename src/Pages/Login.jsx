@@ -3,6 +3,17 @@ import Navbar from '../Components/Navbar'
 import mascot from '../assets/mascot.png'
 import roundLogo from '../assets/round-logo.png'
 import ecilogo from '../assets/eci-logo.png'
+<<<<<<< Updated upstream
+=======
+import { useNavigate } from "react-router-dom"
+
+function Login() {
+    const navigate = useNavigate()
+
+    const handleEnter = () => {
+        navigate("/userDetails")
+    }
+>>>>>>> Stashed changes
 
 function Login({ setPhoneNumber, phoneNumber, submitPhoneNumber }) {
     return (

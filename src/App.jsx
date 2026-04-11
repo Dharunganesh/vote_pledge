@@ -1,10 +1,17 @@
+<<<<<<< Updated upstream
 
 import React, { useState } from 'react'
 import Login from './Pages/Login'
+=======
+import { Route, Routes } from 'react-router-dom'
+import Login from './Pages/Login'
+import UserDetails from './Pages/UserDetails'
+>>>>>>> Stashed changes
 import './App.css'
 import OTPVerification from './Pages/OTPVerification'
 
 function App() {
+<<<<<<< Updated upstream
     const [phoneNumber, setPhoneNumber] = useState('')
     const [showOtp, setShowOtp] = useState(false)
 
@@ -42,6 +49,15 @@ function App() {
                 : <OTPVerification phoneNumber={phoneNumber} />
             }
         </div>
+=======
+    return (
+        <>
+            <Routes>
+                <Route path='/' element={<Login />} />
+                <Route path='/userDetails' element={<UserDetails />} />
+            </Routes>
+        </>
+>>>>>>> Stashed changes
     )
 }
 

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream:src/Pages/user-details.jsx
 import { useState } from "react";
 
 <<<<<<< HEAD
@@ -248,3 +249,488 @@ function App() {
 
 export default App
 >>>>>>> 2fbe610f129be258e7501afccfff1433dc5f86aa
+=======
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+const API_BASE_URL = 'https://otp-verification-gpty.onrender.com'
+
+const initialForm = {
+  name: '',
+  dob: '',
+  gender: 'male',
+  block: 'Arakonam',
+  town: 'Ranipet',
+  phone_number: '',
+}
+
+function calculateAge(dob) {
+  if (!dob) {
+    return ''
+  }
+
+  const today = new Date()
+  const birthDate = new Date(dob)
+  let age = today.getFullYear() - birthDate.getFullYear()
+  const monthDifference = today.getMonth() - birthDate.getMonth()
+
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age -= 1
+  }
+
+  return age >= 0 ? String(age) : ''
+}
+
+function normalizePhoneNumber(phoneNumber) {
+  const trimmed = phoneNumber.trim()
+
+  if (!trimmed) {
+    return ''
+  }
+
+  if (trimmed.startsWith('+')) {
+    return trimmed
+  }
+
+  const digitsOnly = trimmed.replace(/\D/g, '')
+
+  if (digitsOnly.length === 10) {
+    return `+91${digitsOnly}`
+  }
+
+  if (digitsOnly.length > 10) {
+    return `+${digitsOnly}`
+  }
+
+  return ''
+}
+
+export default function UserDetails() {
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState(initialForm)
+  const [submitting, setSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
+  const [savedUser, setSavedUser] = useState(null)
+
+  const age = calculateAge(formData.dob)
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+
+    setFormData((current) => ({
+      ...current,
+      [name]: value,
+    }))
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    setErrorMessage('')
+    setSuccessMessage('')
+    setSavedUser(null)
+
+    const normalizedPhoneNumber = normalizePhoneNumber(formData.phone_number)
+
+    if (!normalizedPhoneNumber) {
+      setErrorMessage('Please enter a valid phone number.')
+      return
+    }
+
+    if (
+      !formData.name.trim() ||
+      !formData.dob ||
+      !formData.gender ||
+      !formData.town.trim() ||
+      !formData.block
+    ) {
+      setErrorMessage('Please fill in all required details before submitting.')
+      return
+    }
+
+    const payload = {
+      name: formData.name.trim(),
+      dob: formData.dob,
+      age: Number(age),
+      gender: formData.gender,
+      block: formData.block,
+      town: formData.town.trim(),
+      phone_number: normalizedPhoneNumber,
+    }
+
+    try {
+      setSubmitting(true)
+
+      const response = await fetch(`${API_BASE_URL}/add-user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
+
+      if (!response.ok) {
+        let message = 'Unable to save your details right now.'
+
+        try {
+          const errorData = await response.json()
+          message = errorData?.detail?.[0]?.msg || message
+        } catch {
+          // Keep the fallback message if the response body is not JSON.
+        }
+
+        throw new Error(message)
+      }
+
+      const responseData = await response.json()
+      const createdUser = responseData?.data?.[0] ?? null
+
+      setSavedUser(createdUser)
+      setFormData(initialForm)
+      setSuccessMessage(
+        createdUser?.id
+          ? `Your details were saved successfully. User ID: ${createdUser.id}`
+          : 'Your details were saved successfully.'
+      )
+    } catch (error) {
+      setErrorMessage(error.message)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  return (
+    <div className="bg-[#f8f9fa] text-[#191c1d] min-h-screen flex flex-col">
+      <header className="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-xl shadow-sm h-16 flex items-center justify-between px-6">
+        <div className="flex items-center gap-3">
+          <span className="material-symbols-outlined text-[#001d44] text-2xl">
+            
+          </span>
+          <span
+            className="text-lg font-bold text-[#001d44] tracking-tight"
+            style={{ fontFamily: "'Public Sans', sans-serif" }}
+          >
+            இராணிப்பேட்டை மாவட்டம் / Ranipet District
+          </span>
+        </div>
+        <div className="hidden md:flex gap-8">
+          <a
+            className="text-slate-500 hover:bg-slate-200/50 transition-colors px-3 py-1 rounded-lg"
+            href="#"
+          >
+            முகப்பு / Home
+          </a>
+          <a
+            className="text-[#001d44] font-bold border-b-2 border-[#001d44] px-3 py-1"
+            href="#"
+          >
+            உறுதிமொழி / Pledge
+          </a>
+          <a
+            className="text-slate-500 hover:bg-slate-200/50 transition-colors px-3 py-1 rounded-lg"
+            href="#"
+          >
+            தகவல் / Info
+          </a>
+        </div>
+      </header>
+
+      <main className="flex-grow pt-24 pb-12 px-4 md:px-8 max-w-4xl mx-auto w-full">
+        <div className="mb-12">
+          <h1
+            className="text-4xl md:text-5xl font-extrabold text-[#001d44] leading-tight tracking-tight mb-4"
+            style={{ fontFamily: "'Public Sans', sans-serif" }}
+          >
+            உங்கள் விவரங்களை{' '}
+            <span className="text-[#6b9bef]">உறுதிப்படுத்தவும்</span>
+            <br />
+            <span className="text-2xl md:text-3xl font-bold opacity-80">
+              Confirm Your Details
+            </span>
+          </h1>
+          <p className="text-[#43474f] max-w-2xl text-lg leading-relaxed">
+            வாக்காளர் உறுதிமொழி ஏற்பதற்கு முன் உங்கள் விவரங்கள் சரியாக இருப்பதை
+            உறுதி செய்யவும். / Please verify that your details are correct
+            before taking the voter pledge.
+          </p>
+        </div>
+
+        <div className="bg-white rounded-3xl p-8 md:p-12 shadow-[0px_12px_32px_rgba(25,28,29,0.06)]">
+          <form className="space-y-8" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+              <div className="space-y-2">
+                <label
+                  className="block text-sm font-semibold text-[#001d44] uppercase tracking-wider"
+                  htmlFor="name"
+                >
+                  பெயர் / Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full bg-[#f3f4f5] rounded-xl px-4 py-4 text-[#191c1d] font-medium focus:ring-2 focus:ring-[#255dad] outline-none"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-[#001d44] uppercase tracking-wider">
+                  வயது / Age
+                </label>
+                <div className="bg-[#f3f4f5] rounded-xl px-4 py-4 text-[#191c1d] font-medium">
+                  {age || '--'}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label
+                  className="block text-sm font-semibold text-[#001d44] uppercase tracking-wider"
+                  htmlFor="dob"
+                >
+                  பிறந்த தேதி / Date of Birth
+                </label>
+                <input
+                  id="dob"
+                  name="dob"
+                  type="date"
+                  value={formData.dob}
+                  onChange={handleChange}
+                  className="w-full bg-[#f3f4f5] rounded-xl px-4 py-4 text-[#191c1d] font-medium focus:ring-2 focus:ring-[#255dad] outline-none"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-[#001d44] uppercase tracking-wider">
+                  மாவட்டம் / District
+                </label>
+                <div className="bg-[#e1e3e4]/50 rounded-xl px-4 py-4 text-[#001d44] font-bold flex items-center gap-2">
+                  <span className="material-symbols-outlined text-lg">
+                    location_on
+                  </span>
+                  இராணிப்பேட்டை / Ranipet
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label
+                  className="block text-sm font-semibold text-[#001d44] uppercase tracking-wider"
+                  htmlFor="town"
+                >
+                  ஊர் / Town
+                </label>
+                <input
+                  id="town"
+                  name="town"
+                  type="text"
+                  value={formData.town}
+                  onChange={handleChange}
+                  className="w-full bg-[#f3f4f5] rounded-xl px-4 py-4 text-[#191c1d] font-medium focus:ring-2 focus:ring-[#255dad] outline-none"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label
+                  className="block text-sm font-semibold text-[#001d44] uppercase tracking-wider"
+                  htmlFor="block"
+                >
+                  வட்டம் / Block
+                </label>
+                <select
+                  id="block"
+                  name="block"
+                  value={formData.block}
+                  onChange={handleChange}
+                  className="w-full bg-[#f3f4f5] border-none rounded-xl px-4 py-4 text-[#191c1d] focus:ring-2 focus:ring-[#255dad] font-medium appearance-none outline-none"
+                  required
+                >
+                  <option value="Arakonam">அரக்கோணம் / Arakonam</option>
+                  <option value="Arcot">ஆற்காடு / Arcot</option>
+                  <option value="Walaja">வாலாஜா / Walaja</option>
+                  <option value="Nemili">நெமிலி / Nemili</option>
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <label
+                  className="block text-sm font-semibold text-[#001d44] uppercase tracking-wider"
+                  htmlFor="phone_number"
+                >
+                  கைபேசி எண் / Phone Number
+                </label>
+                <input
+                  id="phone_number"
+                  name="phone_number"
+                  type="tel"
+                  value={formData.phone_number}
+                  onChange={handleChange}
+                  placeholder="+91XXXXXXXXXX"
+                  className="w-full bg-[#f3f4f5] rounded-xl px-4 py-4 text-[#191c1d] font-medium focus:ring-2 focus:ring-[#255dad] outline-none"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-[#001d44] uppercase tracking-wider">
+                  பாலினம் / Gender
+                </label>
+                <div className="flex gap-4">
+                  {[
+                    ['male', 'ஆண் / Male'],
+                    ['female', 'பெண் / Female'],
+                  ].map(([value, label]) => (
+                    <label
+                      key={value}
+                      className={`flex-1 flex items-center justify-center gap-2 p-4 rounded-xl cursor-pointer transition-colors ${
+                        formData.gender === value
+                          ? 'bg-[#d5e4f7]'
+                          : 'bg-[#f3f4f5] hover:bg-[#d5e4f7]'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="gender"
+                        value={value}
+                        checked={formData.gender === value}
+                        onChange={handleChange}
+                        className="text-[#001d44] focus:ring-[#001d44]"
+                      />
+                      <span className="font-medium">{label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 p-6 bg-[#a3f69c]/20 rounded-xl flex gap-4 items-start border-l-4 border-[#002504]">
+              <span
+                className="material-symbols-outlined text-[#002504]"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                info
+              </span>
+              <div>
+                <p className="text-sm text-[#002504] font-semibold leading-relaxed">
+                  உங்கள் விவரங்கள் வாக்காளர் பட்டியலில் உள்ளபடி இருப்பதை உறுதி
+                  செய்யவும். தவறான விவரங்கள் உறுதிமொழியை செல்லாததாக்கலாம்.
+                </p>
+                <p className="text-xs text-[#002504]/80 mt-1 uppercase tracking-tight">
+                  Ensure details match your voter ID to keep the pledge valid.
+                </p>
+              </div>
+            </div>
+
+            {errorMessage ? (
+              <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {errorMessage}
+              </div>
+            ) : null}
+
+            {successMessage ? (
+              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                {successMessage}
+              </div>
+            ) : null}
+
+            {savedUser ? (
+              <div className="rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-800">
+                Saved record: {savedUser.name}, {savedUser.phone_number},{' '}
+                {savedUser.town}, {savedUser.block}
+              </div>
+            ) : null}
+
+            <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
+              <button
+                type="button"
+                onClick={() => navigate('/')}
+                className="text-slate-500 font-semibold hover:text-[#001d44] transition-colors flex items-center gap-2"
+              >
+                <span className="material-symbols-outlined">arrow_back</span>
+                திருத்தவும் / Edit
+              </button>
+              <button
+                type="submit"
+                disabled={submitting}
+                className="w-full md:w-auto px-12 py-4 bg-gradient-to-br from-[#001d44] to-[#00326b] text-white rounded-3xl font-bold text-lg shadow-lg hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {submitting ? 'Submitting...' : 'தொடரவும் / Continue'}
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuCIvoLqCEBp3cUMZ4APcVVfPpPEEMEUBwVbBiKpiUHaDmhUASEox6PmZYgkKlfcT_w8Trrag2oOLGipCn0HBuFWcPcMygBOhxq8vtWAJaQAw9Z1wFBy-NWQs6nINWuvsvWMgiyH7LVAMggYeuoeFzppBnNtUSIOa5YIEnwkBtEUkOD3WdVnhxnOOnZsyAgSOJz383BA4Yk59yOa6_C2gTxhq554F3haFkovdsLUQvHCqCLc_rEEJYwVkoA9ZMBm3UpojBqHTSxEk1He',
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuA955jERtAtAA4KGGxOLcWwNGg8GtjovI_BUqdX9P87uL0ow97EJDCrOqouPyUGczi4sVoDuWof3-iKtK74DNCywbJrmw3-IdNip_zTxO9rGtEPui_PUzakQN5D-WO4NHegAsxLtFWKpYpobJCf3jes7D8KBfVAPA-Og2g-E04J232GgXNHlZ6MIJQruErD6uI2YYLjlRcldyZ4WoQjPm45fwgMoZ4mq3fnIbtgXqVZmvIRlBsYE6dIPyoEzLwTKI-QyqL-h3M7Pk5d',
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuDnM5ed-UsKhFYKnmYrSOjf4AzLjQFOWOR6GMie_loOGKGIODMHp0kzbPkhq4uHAoFM7NbgsQuRDNxbNL7aLFzu5SIbrbY7b5YW89fOb9NaU6asV9uXlyJm7S99fX10RwuK71pDBsfcZ6vzd3ayFqwMrqD9EtH2wq8rvNmqrVL1GypIRfK-9c3VWexc-VvTWW1YcIlteqMdOcVWBS83avOTaxQ39oviUMfalsPetZB1W8rtCW-tTWHbvNOUGEJSgYOGFgvFRYnFA1H6',
+          ].map((src, i) => (
+            <div
+              key={i}
+              className="h-32 rounded-xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-700"
+            >
+              <img className="w-full h-full object-cover" src={src} alt="" />
+            </div>
+          ))}
+        </div>
+      </main>
+
+      <footer className="w-full py-8 mt-auto bg-[#f3f4f5] flex flex-col items-center justify-center gap-4 text-center px-4">
+        <p className="text-xs uppercase tracking-widest text-[#001d44] leading-relaxed">
+          தமிழ்நாடு சட்டமன்ற தேர்தல் 2026 / Tamil Nadu Election 2026
+        </p>
+        <div className="flex gap-6">
+          <a
+            className="text-slate-600 text-xs font-bold uppercase hover:underline decoration-[#001d44]"
+            href="#"
+          >
+            Voter Helpline: 1950
+          </a>
+        </div>
+      </footer>
+
+      <nav className="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-white/80 backdrop-blur-2xl border-t border-slate-200/20 shadow-[0px_-12px_32px_rgba(25,28,29,0.06)] z-50 rounded-t-3xl">
+        <a
+          className="flex flex-col items-center justify-center text-slate-500 px-4 py-2 active:scale-90 transition-transform"
+          href="#"
+        >
+          <span className="material-symbols-outlined text-2xl">home</span>
+          <span className="text-[10px] font-semibold mt-1">முகப்பு / Home</span>
+        </a>
+        <a
+          className="flex flex-col items-center justify-center bg-gradient-to-br from-[#001d44] to-[#00326b] text-white rounded-2xl px-6 py-2 active:scale-90 transition-transform"
+          href="#"
+        >
+          <span
+            className="material-symbols-outlined text-2xl"
+            style={{ fontVariationSettings: "'FILL' 1" }}
+          >
+            how_to_vote
+          </span>
+          <span className="text-[11px] font-semibold mt-1">
+            உறுதிமொழி / Pledge
+          </span>
+        </a>
+        <a
+          className="flex flex-col items-center justify-center text-slate-500 px-4 py-2 active:scale-90 transition-transform"
+          href="#"
+        >
+          <span className="material-symbols-outlined text-2xl">info</span>
+          <span className="text-[10px] font-semibold mt-1">
+            தகவல் / Info
+          </span>
+        </a>
+      </nav>
+    </div>
+  )
+}
+>>>>>>> Stashed changes:src/Pages/UserDetails.jsx
