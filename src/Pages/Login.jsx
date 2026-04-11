@@ -3,8 +3,6 @@ import Navbar from '../Components/Navbar'
 import mascot from '../assets/mascot.png'
 import roundLogo from '../assets/round-logo.png'
 import ecilogo from '../assets/eci-logo.png'
-<<<<<<< Updated upstream
-=======
 import { useNavigate } from "react-router-dom"
 
 function Login() {
@@ -13,12 +11,11 @@ function Login() {
     const handleEnter = () => {
         navigate("/userDetails")
     }
->>>>>>> Stashed changes
 
-function Login({ setPhoneNumber, phoneNumber, submitPhoneNumber }) {
     return (
         <div className='min-h-screen bg-neutral-200 relative'>
             <Navbar />
+
             <div className='flex justify-between'>
                 <img
                     src={ecilogo}
@@ -27,10 +24,9 @@ function Login({ setPhoneNumber, phoneNumber, submitPhoneNumber }) {
                 />
                 <img
                     src={roundLogo}
-                    alt="mascot"
+                    alt="logo"
                     className='absolute right-3 top-24 w-34 md:w-40 md:right-10 md:top-28 drop-shadow-lg z-1'
                 />
-
             </div>
 
             <div className='flex flex-col items-center px-5 py-6 z-10 relative'>
@@ -40,28 +36,16 @@ function Login({ setPhoneNumber, phoneNumber, submitPhoneNumber }) {
                 </h1>
 
                 <p className='text-center text-gray-900 mt-5 text-xl md:text-2xl'>
-                    வாக்களிப்பு உறுதிமொழி எடுக்க உங்கள் மொபைல் எண்ணை உள்ளிடவும்
+                    தொடர கீழே உள்ள பட்டனை அழுத்தவும்
                 </p>
 
                 <div className='bg-white w-full max-w-md mt-5 p-4 rounded-2xl shadow md:max-w-xl md:mt-20'>
 
-                    <label className='text-xs font-semibold text-gray-700'>
-                        மொபைல் எண் / Mobile Number
-                    </label>
-
-                    <input
-                        type="text"
-                        placeholder="+91 98765 43210"
-                        className='w-full mt-2 mb-2 p-3 rounded-lg bg-gray-100 outline-none md:mb-5'
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                    />
-
                     <button
                         className='w-full mt-4 bg-orange-600 text-white py-4 rounded-xl font-semibold md:mb-5'
-                        onClick={() => submitPhoneNumber()}
+                        onClick={handleEnter}
                     >
-                        OTP அனுப்பு / Send OTP
+                        Enter
                     </button>
 
                     <div className='flex items-center justify-between'>
@@ -74,9 +58,7 @@ function Login({ setPhoneNumber, phoneNumber, submitPhoneNumber }) {
                             OFFICIAL PORTAL<br />
                             <span className='text-black font-bold'>Govt of Tamil Nadu</span>
                         </p>
-
                     </div>
-
 
                 </div>
 
