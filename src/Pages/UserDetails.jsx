@@ -128,11 +128,11 @@ export default function UserDetails() {
 
         {/* Title */}
         <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-[#001d44] leading-tight mb-4">
+          <h1 className="text-4xl md:text-5xl text-orange-600 leading-tight mb-4">
             உங்கள் விவரங்களை{" "}
-            <span className="text-[#6b9bef]">உறுதிப்படுத்தவும்</span>
+            <span className="text-black">உறுதிப்படுத்தவும்</span>
             <br />
-            <span className="text-2xl md:text-3xl font-bold opacity-80">
+            <span className="text-2xl md:text-3xl opacity-80">
               Confirm Your Details
             </span>
           </h1>
@@ -269,7 +269,7 @@ export default function UserDetails() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="bg-[#001d44] text-white px-6 py-3 rounded-xl"
+                className="bg-orange-600 text-white px-6 py-3 rounded-xl"
               >
                 {submitting ? 'Saving...' : 'Continue'}
               </button>
