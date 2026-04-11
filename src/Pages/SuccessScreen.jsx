@@ -40,15 +40,24 @@ const SuccessScreen = () => {
 
       const blob = await response.blob();
 
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "certificate.pdf";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      // ✅ FIX: stable blob handling for desktop + mobile
+      const blobUrl = window.URL.createObjectURL(
+        new Blob([blob], { type: "application/pdf" })
+      );
 
-      window.URL.revokeObjectURL(url);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = `certificate-${userName}.pdf`;
+
+      document.body.appendChild(link);
+      link.click();
+
+      // ✅ FIX: delay revoke (important for Chrome desktop)
+      setTimeout(() => {
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(blobUrl);
+      }, 200);
+
     } catch (err) {
       console.error("Certificate download error:", err);
       alert("Download failed");
@@ -63,7 +72,13 @@ const SuccessScreen = () => {
       {/* Header */}
       <header className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3">
         <div className="w-9 h-9 bg-orange-100 rounded-lg flex items-center justify-center">
-          <svg viewBox="0 0 24 24" className="w-5 h-5 text-orange-700" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            viewBox="0 0 24 24"
+            className="w-5 h-5 text-orange-700"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <rect x="3" y="3" width="7" height="7" />
             <rect x="14" y="3" width="7" height="7" />
             <rect x="3" y="14" width="7" height="7" />
@@ -77,7 +92,13 @@ const SuccessScreen = () => {
 
         {/* Success Icon */}
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-          <svg viewBox="0 0 24 24" className="w-8 h-8 text-green-700" fill="none" stroke="currentColor" strokeWidth="3">
+          <svg
+            viewBox="0 0 24 24"
+            className="w-8 h-8 text-green-700"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+          >
             <path d="M5 13l4 4L19 7" />
           </svg>
         </div>
@@ -113,6 +134,7 @@ const SuccessScreen = () => {
 
         {/* Buttons */}
         <div className="w-full space-y-3 pt-2">
+
           <button
             onClick={downloadCertificate}
             disabled={loading}
@@ -126,11 +148,12 @@ const SuccessScreen = () => {
           </button>
 
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             className="text-sm text-gray-500 underline pt-2"
           >
             Back to Home
           </button>
+
         </div>
 
       </main>
