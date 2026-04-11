@@ -103,10 +103,21 @@ export default function UserDetails() {
 
         {/* Title */}
         <div className="mb-12">
-          <h1 className="text-4xl font-extrabold text-[#001d44]">
-            உங்கள் விவரங்களை <span className="text-[#6b9bef]">உறுதிப்படுத்தவும்</span>
-          </h1>
-        </div>
+  <h1 className="text-4xl md:text-5xl font-extrabold text-[#001d44] leading-tight tracking-tight mb-4">
+    உங்கள் விவரங்களை{" "}
+    <span className="text-[#6b9bef]">உறுதிப்படுத்தவும்</span>
+    <br />
+    <span className="text-2xl md:text-3xl font-bold opacity-80">
+      Confirm Your Details
+    </span>
+  </h1>
+
+  <p className="text-[#43474f] max-w-2xl text-lg leading-relaxed">
+    வாக்காளர் உறுதிமொழி ஏற்பதற்கு முன் உங்கள் விவரங்கள் சரியாக இருப்பதை
+    உறுதி செய்யவும். / Please verify that your details are correct before
+    taking the voter pledge.
+  </p>
+</div>
 
         {/* Form */}
         <div className="bg-white rounded-2xl p-8 shadow">
