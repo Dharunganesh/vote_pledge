@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Navbar from '../Components/Navbar'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL
 
@@ -116,98 +117,109 @@ export default function UserDetails() {
 
   return (
     <div className="bg-[#f8f9fa] text-[#191c1d] min-h-screen flex flex-col">
+      <Navbar />
 
-      {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-xl shadow-sm h-16 flex items-center justify-between px-6">
-        <span className="text-lg font-bold text-black">
-          இராணிப்பேட்டை மாவட்டம் / Ranipet District
-        </span>
-      </header>
-
-      <main className="flex-grow pt-24 pb-12 px-4 md:px-8 max-w-4xl mx-auto w-full">
+      <main className="flex-grow pt-20 sm:pt-24 pb-10 px-3 sm:px-6 md:px-8 max-w-5xl mx-auto w-full">
 
         {/* Title */}
-        <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-orange-600 leading-tight mb-4">
+        <div className="mb-8 sm:mb-12 text-center sm:text-left">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-orange-600 leading-tight">
             உங்கள் விவரங்களை{" "}
             <span className="text-black">உறுதிப்படுத்தவும்</span>
             <br />
-            <span className="text-2xl md:text-3xlopacity-80">
+            <span className="text-lg sm:text-xl md:text-2xl opacity-80">
               Confirm Your Details
             </span>
           </h1>
 
-          <p className="text-[#43474f] max-w-2xl text-lg">
-            வாக்காளர் உறுதிமொழி ஏற்பதற்கு முன் உங்கள் விவரங்கள் சரியாக இருப்பதை
-            உறுதி செய்யவும்.
+          <p className="text-[#43474f] mt-3 max-w-2xl text-sm sm:text-base md:text-lg mx-auto sm:mx-0">
+            வாக்காளர் உறுதிமொழி ஏற்பதற்கு முன் உங்கள் விவரங்கள் சரியாக இருப்பதை உறுதி செய்யவும்.
           </p>
         </div>
 
-        {/* Form */}
-        <div className="bg-white rounded-3xl p-8 md:p-12 shadow">
-          <form className="space-y-8" onSubmit={handleSubmit}>
+        {/* Form Card */}
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-10 shadow">
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+          <form className="space-y-6 sm:space-y-8" onSubmit={handleSubmit}>
+
+            {/* Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
 
               {/* Name */}
               <div>
-                <label className="text-sm font-semibold text-[#001d44]">பெயர் / Name</label>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
+                  பெயர் / Name
+                </label>
                 <input
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full bg-gray-100 p-4 rounded-xl mt-2"
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2 text-sm sm:text-base"
                   required
                 />
               </div>
 
               {/* DOB */}
               <div>
-                <label className="text-sm font-semibold text-[#001d44]">பிறந்த தேதி</label>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
+                  பிறந்த தேதி
+                </label>
                 <input
                   type="date"
                   name="dob"
                   value={formData.dob}
                   onChange={handleChange}
-                  className="w-full bg-gray-100 p-4 rounded-xl mt-2"
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2 text-sm sm:text-base"
                   required
                 />
               </div>
 
               {/* Age */}
               <div>
-                <label className="text-sm font-semibold text-[#001d44]">வயது / Age</label>
-                <input value={age} readOnly className="w-full bg-gray-200 p-4 rounded-xl mt-2" />
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
+                  வயது / Age
+                </label>
+                <input
+                  value={age}
+                  readOnly
+                  className="w-full bg-gray-200 p-3 sm:p-4 rounded-xl mt-2 text-sm sm:text-base"
+                />
               </div>
 
               {/* District */}
               <div>
-                <label className="text-sm font-semibold text-[#001d44]">மாவட்டம்</label>
-                <div className="bg-gray-200 p-4 rounded-xl mt-2 font-bold">
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
+                  மாவட்டம்
+                </label>
+                <div className="bg-gray-200 p-3 sm:p-4 rounded-xl mt-2 font-bold text-sm sm:text-base">
                   இராணிப்பேட்டை / Ranipet
                 </div>
               </div>
 
               {/* Town */}
               <div>
-                <label className="text-sm font-semibold text-[#001d44]">ஊர் / Town</label>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
+                  ஊர் / Town
+                </label>
                 <input
                   name="town"
                   value={formData.town}
                   onChange={handleChange}
-                  className="w-full bg-gray-100 p-4 rounded-xl mt-2"
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2 text-sm sm:text-base"
                   required
                 />
               </div>
 
               {/* Block */}
               <div>
-                <label className="text-sm font-semibold text-[#001d44]">வட்டம் / Block</label>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
+                  வட்டம் / Block
+                </label>
                 <select
                   name="block"
                   value={formData.block}
                   onChange={handleChange}
-                  className="w-full bg-gray-100 p-4 rounded-xl mt-2"
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2 text-sm sm:text-base"
                 >
                   <option value="Arakonam">Arakonam</option>
                   <option value="Arcot">Arcot</option>
@@ -218,38 +230,45 @@ export default function UserDetails() {
 
               {/* Phone */}
               <div>
-                <label className="text-sm font-semibold text-[#001d44]">Phone</label>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
+                  Phone
+                </label>
                 <input
                   name="phone_number"
                   value={formData.phone_number}
                   onChange={handleChange}
                   placeholder="+91XXXXXXXXXX"
-                  className="w-full bg-gray-100 p-4 rounded-xl mt-2"
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2 text-sm sm:text-base"
                   required
                 />
               </div>
 
               {/* Gender */}
               <div>
-                <label className="text-sm font-semibold text-[#001d44]">Gender</label>
-                <div className="flex gap-4 mt-2">
-                  <label>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
+                  Gender
+                </label>
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 mt-2 text-sm sm:text-base">
+                  <label className="flex items-center gap-2">
                     <input
                       type="radio"
                       name="gender"
                       value="male"
                       checked={formData.gender === 'male'}
                       onChange={handleChange}
-                    /> Male
+                    />
+                    Male
                   </label>
-                  <label>
+
+                  <label className="flex items-center gap-2">
                     <input
                       type="radio"
                       name="gender"
                       value="female"
                       checked={formData.gender === 'female'}
                       onChange={handleChange}
-                    /> Female
+                    />
+                    Female
                   </label>
                 </div>
               </div>
@@ -257,27 +276,32 @@ export default function UserDetails() {
             </div>
 
             {/* Messages */}
-            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-            {successMessage && <p className="text-green-500">{successMessage}</p>}
+            {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
+            {successMessage && <p className="text-green-500 text-sm">{successMessage}</p>}
 
             {/* Buttons */}
-            <div className="flex justify-between mt-6">
-              <button type="button" onClick={() => navigate('/')} className="text-gray-500">
+            <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6">
+
+              <button
+                type="button"
+                onClick={() => navigate('/')}
+                className="w-full sm:w-auto text-gray-500 text-sm sm:text-base"
+              >
                 Back
               </button>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="bg-orange-600 text-white px-6 py-3 rounded-xl"
+                className="w-full sm:w-auto bg-orange-600 text-white px-6 py-3 rounded-xl text-sm sm:text-base"
               >
                 {submitting ? 'Saving...' : 'Continue'}
               </button>
+
             </div>
 
           </form>
         </div>
-
       </main>
     </div>
   )
