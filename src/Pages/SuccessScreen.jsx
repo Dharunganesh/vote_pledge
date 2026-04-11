@@ -1,8 +1,12 @@
-const SuccessScreen = ({ userName, onHome }) => {
+import { useNavigate } from "react-router-dom";
+
+const SuccessScreen = () => {
+  const navigate = useNavigate();
+  const userName = localStorage.getItem("name") || "Citizen";
+
   return (
     <div className="flex flex-col flex-1 pb-10 bg-orange-50">
 
-      {/* Header */}
       <header className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3">
         <div className="w-9 h-9 bg-orange-100 rounded-lg flex items-center justify-center">
           <svg viewBox="0 0 24 24" className="w-5 h-5 text-orange-700" fill="none" stroke="currentColor" strokeWidth="2">
@@ -17,14 +21,12 @@ const SuccessScreen = ({ userName, onHome }) => {
 
       <main className="px-6 py-8 flex flex-col items-center text-center space-y-6">
 
-        {/* Success Icon */}
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
           <svg viewBox="0 0 24 24" className="w-8 h-8 text-green-700" fill="none" stroke="currentColor" strokeWidth="3">
             <path d="M5 13l4 4L19 7" />
           </svg>
         </div>
 
-        {/* Text */}
         <div>
           <h1 className="text-xl font-bold text-gray-900">
             நன்றி! நீங்கள் நேர்மையான வாக்காளராக உறுதி எடுத்துள்ளீர்கள்!
@@ -34,7 +36,6 @@ const SuccessScreen = ({ userName, onHome }) => {
           </p>
         </div>
 
-        {/* Certificate */}
         <div className="w-full bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
           <div className="h-2 bg-orange-700"></div>
 
@@ -50,14 +51,9 @@ const SuccessScreen = ({ userName, onHome }) => {
             <p className="text-xs italic text-gray-600">
               "As a citizen of India, I pledge to vote ethically and without being influenced by any inducements."
             </p>
-
-            <div className="flex justify-center pt-3">
-              <div className="w-14 h-14 bg-orange-100 rounded-md"></div>
-            </div>
           </div>
         </div>
 
-        {/* Buttons */}
         <div className="w-full space-y-3 pt-2">
           <button className="w-full bg-orange-700 text-white py-4 rounded-xl font-semibold shadow">
             Download Certificate
@@ -68,7 +64,7 @@ const SuccessScreen = ({ userName, onHome }) => {
           </button>
 
           <button
-            onClick={onHome}
+            onClick={() => navigate('/')}
             className="text-sm text-gray-500 underline pt-2"
           >
             Back to Home
