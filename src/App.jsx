@@ -1,18 +1,17 @@
+
+
 import React, { useState } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import OTPVerification from './Pages/OTPVerification'
-import LoginWrapper from './Components/LoginWrapper'
+import { Route, Routes } from 'react-router-dom'
+import Login from './Pages/Login'
 import UserDetails from './Pages/UserDetails'
 import './App.css'
 
 function App() {
-    const [phoneNumber, setPhoneNumber] = useState('')
 
     return (
         <>
             <Routes>
-                <Route path='/' element={<LoginWrapper phoneNumber={phoneNumber} setPhoneNumber={setPhoneNumber} />} />
-                <Route path='/otp' element={<OTPVerification phoneNumber={phoneNumber} />} />
+                <Route path='/' element={<Login />} />
                 <Route path='/userDetails' element={<UserDetails />} />
             </Routes>
         </>
