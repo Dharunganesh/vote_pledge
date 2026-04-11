@@ -91,7 +91,7 @@ export default function UserDetails() {
 
   return (
     <div className="bg-[#f8f9fa] text-[#191c1d] min-h-screen flex flex-col">
-      
+
       {/* Header */}
       <header className="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-xl shadow-sm h-16 flex items-center justify-between px-6">
         <span className="text-lg font-bold text-[#001d44]">
@@ -103,122 +103,157 @@ export default function UserDetails() {
 
         {/* Title */}
         <div className="mb-12">
-  <h1 className="text-4xl md:text-5xl font-extrabold text-[#001d44] leading-tight tracking-tight mb-4">
-    உங்கள் விவரங்களை{" "}
-    <span className="text-[#6b9bef]">உறுதிப்படுத்தவும்</span>
-    <br />
-    <span className="text-2xl md:text-3xl font-bold opacity-80">
-      Confirm Your Details
-    </span>
-  </h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#001d44] leading-tight mb-4">
+            உங்கள் விவரங்களை{" "}
+            <span className="text-[#6b9bef]">உறுதிப்படுத்தவும்</span>
+            <br />
+            <span className="text-2xl md:text-3xl font-bold opacity-80">
+              Confirm Your Details
+            </span>
+          </h1>
 
-  <p className="text-[#43474f] max-w-2xl text-lg leading-relaxed">
-    வாக்காளர் உறுதிமொழி ஏற்பதற்கு முன் உங்கள் விவரங்கள் சரியாக இருப்பதை
-    உறுதி செய்யவும். / Please verify that your details are correct before
-    taking the voter pledge.
-  </p>
-</div>
+          <p className="text-[#43474f] max-w-2xl text-lg">
+            வாக்காளர் உறுதிமொழி ஏற்பதற்கு முன் உங்கள் விவரங்கள் சரியாக இருப்பதை
+            உறுதி செய்யவும்.
+          </p>
+        </div>
 
-        {/* Form */}
-        <div className="bg-white rounded-2xl p-8 shadow">
-          <form className="space-y-6" onSubmit={handleSubmit}>
+        {/* Form Card */}
+        <div className="bg-white rounded-3xl p-8 md:p-12 shadow">
+          <form className="space-y-8" onSubmit={handleSubmit}>
 
-            {/* Name */}
-            <input
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded"
-              required
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
 
-            {/* DOB */}
-            <input
-              type="date"
-              name="dob"
-              value={formData.dob}
-              onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded"
-              required
-            />
-
-            {/* Age */}
-            <input
-              value={age}
-              readOnly
-              className="w-full p-3 bg-gray-200 rounded"
-            />
-
-            {/* Town */}
-            <input
-              name="town"
-              placeholder="Town"
-              value={formData.town}
-              onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded"
-              required
-            />
-
-            {/* Phone */}
-            <input
-              name="phone_number"
-              placeholder="Phone"
-              value={formData.phone_number}
-              onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded"
-              required
-            />
-
-            {/* Gender */}
-            <div className="flex gap-4">
-              <label>
+              {/* Name */}
+              <div>
+                <label className="text-sm font-semibold text-[#001d44]">பெயர் / Name</label>
                 <input
-                  type="radio"
-                  name="gender"
-                  value="male"
-                  checked={formData.gender === 'male'}
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
+                  placeholder="Enter your name"
+                  className="w-full bg-gray-100 p-4 rounded-xl mt-2"
+                  required
                 />
-                Male
-              </label>
+              </div>
 
-              <label>
+              {/* Age */}
+              <div>
+                <label className="text-sm font-semibold text-[#001d44]">வயது / Age</label>
+                <input value={age} readOnly className="w-full bg-gray-200 p-4 rounded-xl mt-2" />
+              </div>
+
+              {/* DOB */}
+              <div>
+                <label className="text-sm font-semibold text-[#001d44]">பிறந்த தேதி</label>
                 <input
-                  type="radio"
-                  name="gender"
-                  value="female"
-                  checked={formData.gender === 'female'}
+                  type="date"
+                  name="dob"
+                  value={formData.dob}
                   onChange={handleChange}
+                  className="w-full bg-gray-100 p-4 rounded-xl mt-2"
+                  required
                 />
-                Female
-              </label>
+              </div>
+
+              {/* District */}
+              <div>
+                <label className="text-sm font-semibold text-[#001d44]">மாவட்டம்</label>
+                <div className="bg-gray-200 p-4 rounded-xl mt-2 font-bold">
+                  இராணிப்பேட்டை / Ranipet
+                </div>
+              </div>
+
+              {/* Town */}
+              <div>
+                <label className="text-sm font-semibold text-[#001d44]">ஊர் / Town</label>
+                <input
+                  name="town"
+                  value={formData.town}
+                  onChange={handleChange}
+                  className="w-full bg-gray-100 p-4 rounded-xl mt-2"
+                  required
+                />
+              </div>
+
+              {/* Block */}
+              <div>
+                <label className="text-sm font-semibold text-[#001d44]">வட்டம் / Block</label>
+                <select
+                  name="block"
+                  value={formData.block}
+                  onChange={handleChange}
+                  className="w-full bg-gray-100 p-4 rounded-xl mt-2"
+                >
+                  <option value="Arakonam">Arakonam</option>
+                  <option value="Arcot">Arcot</option>
+                  <option value="Walaja">Walaja</option>
+                  <option value="Nemili">Nemili</option>
+                </select>
+              </div>
+
+              {/* Phone */}
+              <div>
+                <label className="text-sm font-semibold text-[#001d44]">Phone</label>
+                <input
+                  name="phone_number"
+                  value={formData.phone_number}
+                  onChange={handleChange}
+                  placeholder="+91XXXXXXXXXX"
+                  className="w-full bg-gray-100 p-4 rounded-xl mt-2"
+                  required
+                />
+              </div>
+
+              {/* Gender */}
+              <div>
+                <label className="text-sm font-semibold text-[#001d44]">Gender</label>
+                <div className="flex gap-4 mt-2">
+                  <label>
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="male"
+                      checked={formData.gender === 'male'}
+                      onChange={handleChange}
+                    /> Male
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="female"
+                      checked={formData.gender === 'female'}
+                      onChange={handleChange}
+                    /> Female
+                  </label>
+                </div>
+              </div>
+
             </div>
-
-            {/* Submit */}
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full bg-[#001d44] text-white py-3 rounded-xl"
-            >
-              {submitting ? 'Saving...' : 'Continue'}
-            </button>
 
             {/* Messages */}
             {errorMessage && <p className="text-red-500">{errorMessage}</p>}
             {successMessage && <p className="text-green-500">{successMessage}</p>}
 
-            {/* Back */}
-            <button
-              type="button"
-              onClick={() => navigate('/')}
-              className="text-blue-500 text-sm"
-            >
-              Go Back
-            </button>
+            {/* Buttons */}
+            <div className="flex justify-between mt-6">
+              <button type="button" onClick={() => navigate('/')} className="text-gray-500">
+                Back
+              </button>
+
+              <button
+                type="submit"
+                disabled={submitting}
+                className="bg-[#001d44] text-white px-6 py-3 rounded-xl"
+              >
+                {submitting ? 'Saving...' : 'Continue'}
+              </button>
+            </div>
 
           </form>
         </div>
+
       </main>
     </div>
   )
