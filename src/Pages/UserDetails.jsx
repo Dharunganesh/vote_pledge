@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../Components/Navbar'
 
@@ -36,23 +36,27 @@ function calculateAge(dob) {
 function normalizePhoneNumber(phoneNumber) {
   const digits = phoneNumber.replace(/\D/g, '')
 
-  if (digits.length === 10) {
-    return `+91${digits}`
-  }
-
-  if (digits.length === 12 && digits.startsWith('91')) {
-    return `+${digits}`
-  }
+  if (digits.length === 10) return `+91${digits}`
+  if (digits.length === 12 && digits.startsWith('91')) return `+${digits}`
 
   return ''
 }
 
 export default function UserDetails() {
   const navigate = useNavigate()
+
   const [formData, setFormData] = useState(initialForm)
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
+
+  // ✅ Auto-fill phone from localStorage
+  useEffect(() => {
+    const savedPhone = localStorage.getItem("phone")
+    if (savedPhone) {
+      setFormData(prev => ({ ...prev, phone_number: savedPhone }))
+    }
+  }, [])
 
   const age = calculateAge(formData.dob)
 
@@ -66,13 +70,11 @@ export default function UserDetails() {
 
     const phone = normalizePhoneNumber(formData.phone_number)
 
-    // ✅ Phone validation
     if (!phone) {
       setErrorMessage('Enter valid phone number')
       return
     }
 
-    // ✅ Age validation
     if (!age || Number(age) < 18) {
       setErrorMessage('Age must be 18+')
       return
@@ -98,14 +100,16 @@ export default function UserDetails() {
       const data = await res.json()
 
       if (!res.ok) {
-        console.log("BACKEND ERROR:", data)
         throw new Error(data.detail || 'Failed to save')
       }
 
       setSuccessMessage('Saved successfully ✅')
+
       localStorage.setItem("phone", phone)
       localStorage.setItem("name", formData.name)
+
       navigate("/pledge")
+
       setFormData(initialForm)
 
     } catch (err) {
@@ -119,7 +123,7 @@ export default function UserDetails() {
     <div className="bg-[#f8f9fa] text-[#191c1d] min-h-screen flex flex-col">
       <Navbar />
 
-      <main className="flex-grow pt-20 sm:pt-24 pb-10 px-3 sm:px-6 md:px-8 max-w-5xl mx-auto w-full">
+      <main className="flex-grow pt-20 sm:pt-24 pb-28 px-3 sm:px-6 md:px-8 max-w-5xl mx-auto w-full">
 
         {/* Title */}
         <div className="mb-8 sm:mb-12 text-center sm:text-left">
@@ -137,89 +141,72 @@ export default function UserDetails() {
           </p>
         </div>
 
-        {/* Form Card */}
+        {/* Form */}
         <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-10 shadow">
 
           <form className="space-y-6 sm:space-y-8" onSubmit={handleSubmit}>
 
-            {/* Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
 
               {/* Name */}
               <div>
-                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
-                  பெயர் / Name
-                </label>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">பெயர் / Name</label>
                 <input
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2 text-sm sm:text-base"
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2"
                   required
                 />
               </div>
 
               {/* DOB */}
               <div>
-                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
-                  பிறந்த தேதி
-                </label>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">பிறந்த தேதி</label>
                 <input
                   type="date"
                   name="dob"
                   value={formData.dob}
                   onChange={handleChange}
-                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2 text-sm sm:text-base"
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2"
                   required
                 />
               </div>
 
               {/* Age */}
               <div>
-                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
-                  வயது / Age
-                </label>
-                <input
-                  value={age}
-                  readOnly
-                  className="w-full bg-gray-200 p-3 sm:p-4 rounded-xl mt-2 text-sm sm:text-base"
-                />
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">வயது / Age</label>
+                <input value={age} readOnly className="w-full bg-gray-200 p-3 sm:p-4 rounded-xl mt-2" />
               </div>
 
               {/* District */}
               <div>
-                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
-                  மாவட்டம்
-                </label>
-                <div className="bg-gray-200 p-3 sm:p-4 rounded-xl mt-2 font-bold text-sm sm:text-base">
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">மாவட்டம்</label>
+                <div className="bg-gray-200 p-3 sm:p-4 rounded-xl mt-2 font-bold">
                   இராணிப்பேட்டை / Ranipet
                 </div>
               </div>
 
               {/* Town */}
               <div>
-                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
-                  ஊர் / Town
-                </label>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">ஊர் / Town</label>
                 <input
                   name="town"
                   value={formData.town}
                   onChange={handleChange}
-                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2 text-sm sm:text-base"
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2"
                   required
                 />
               </div>
 
               {/* Block */}
               <div>
-                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
-                  வட்டம் / Block
-                </label>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">வட்டம் / Block</label>
                 <select
                   name="block"
                   value={formData.block}
                   onChange={handleChange}
-                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2 text-sm sm:text-base"
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2"
                 >
                   <option value="Arakonam">Arakonam</option>
                   <option value="Arcot">Arcot</option>
@@ -230,44 +217,29 @@ export default function UserDetails() {
 
               {/* Phone */}
               <div>
-                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
-                  Phone
-                </label>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">Phone</label>
                 <input
                   name="phone_number"
                   value={formData.phone_number}
                   onChange={handleChange}
-                  placeholder="+91XXXXXXXXXX"
-                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2 text-sm sm:text-base"
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2"
                   required
                 />
               </div>
 
               {/* Gender */}
               <div>
-                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
-                  Gender
-                </label>
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 mt-2 text-sm sm:text-base">
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">Gender</label>
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 mt-2">
                   <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="male"
-                      checked={formData.gender === 'male'}
-                      onChange={handleChange}
-                    />
+                    <input type="radio" name="gender" value="male"
+                      checked={formData.gender === 'male'} onChange={handleChange} />
                     Male
                   </label>
 
                   <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="female"
-                      checked={formData.gender === 'female'}
-                      onChange={handleChange}
-                    />
+                    <input type="radio" name="gender" value="female"
+                      checked={formData.gender === 'female'} onChange={handleChange} />
                     Female
                   </label>
                 </div>
@@ -279,25 +251,20 @@ export default function UserDetails() {
             {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
             {successMessage && <p className="text-green-500 text-sm">{successMessage}</p>}
 
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6">
-
-              <button
-                type="button"
-                onClick={() => navigate('/')}
-                className="w-full sm:w-auto text-gray-500 text-sm sm:text-base"
-              >
-                Back
-              </button>
-
+            {/* Continue Button */}
+            <div className="mt-6 sm:mt-8 flex justify-center sm:justify-end">
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full sm:w-auto bg-orange-600 text-white px-6 py-3 rounded-xl text-sm sm:text-base"
+                className="w-full sm:w-auto sm:min-w-[200px] md:min-w-[240px] 
+                           bg-orange-600 text-white px-6 py-3 sm:py-4 
+                           rounded-xl text-sm sm:text-base md:text-lg 
+                           font-semibold shadow 
+                           hover:bg-orange-700 active:scale-95 
+                           transition-all duration-200"
               >
                 {submitting ? 'Saving...' : 'Continue'}
               </button>
-
             </div>
 
           </form>
