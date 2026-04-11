@@ -119,7 +119,7 @@ export default function UserDetails() {
 
       {/* Header */}
       <header className="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-xl shadow-sm h-16 flex items-center justify-between px-6">
-        <span className="text-lg font-bold text-[#001d44]">
+        <span className="text-lg font-bold text-black">
           இராணிப்பேட்டை மாவட்டம் / Ranipet District
         </span>
       </header>
@@ -128,11 +128,11 @@ export default function UserDetails() {
 
         {/* Title */}
         <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl text-orange-600 leading-tight mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-orange-600 leading-tight mb-4">
             உங்கள் விவரங்களை{" "}
             <span className="text-black">உறுதிப்படுத்தவும்</span>
             <br />
-            <span className="text-2xl md:text-3xl opacity-80">
+            <span className="text-2xl md:text-3xlopacity-80">
               Confirm Your Details
             </span>
           </h1>
