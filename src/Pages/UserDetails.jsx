@@ -10,8 +10,8 @@ const initialForm = {
   block: 'Arakonam',
   town: 'Ranipet',
   phone_number: '',
-  will_vote: true,
-  wont_accept_bribe: true
+  will_vote: false,
+  wont_accept_bribe: false
 }
 
 function calculateAge(dob) {
