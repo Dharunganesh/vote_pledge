@@ -1,12 +1,66 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+const CERTIFICATE_API_URL = import.meta.env.VITE_CERTIFICATE_API_URL;
 
 const SuccessScreen = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   const userName = localStorage.getItem("name") || "Citizen";
+
+  const downloadCertificate = async () => {
+    if (!CERTIFICATE_API_URL) {
+      alert("Certificate API URL is not configured");
+      return;
+    }
+
+    if (!userName.trim()) {
+      alert("User name not found");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await fetch(
+        `${CERTIFICATE_API_URL}/generate-certificate`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: userName }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to generate certificate");
+      }
+
+      const blob = await response.blob();
+
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "certificate.pdf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Certificate download error:", err);
+      alert("Download failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col flex-1 pb-10 bg-orange-50">
 
+      {/* Header */}
       <header className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3">
         <div className="w-9 h-9 bg-orange-100 rounded-lg flex items-center justify-center">
           <svg viewBox="0 0 24 24" className="w-5 h-5 text-orange-700" fill="none" stroke="currentColor" strokeWidth="2">
@@ -21,12 +75,14 @@ const SuccessScreen = () => {
 
       <main className="px-6 py-8 flex flex-col items-center text-center space-y-6">
 
+        {/* Success Icon */}
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
           <svg viewBox="0 0 24 24" className="w-8 h-8 text-green-700" fill="none" stroke="currentColor" strokeWidth="3">
             <path d="M5 13l4 4L19 7" />
           </svg>
         </div>
 
+        {/* Text */}
         <div>
           <h1 className="text-xl font-bold text-gray-900">
             நன்றி! நீங்கள் நேர்மையான வாக்காளராக உறுதி எடுத்துள்ளீர்கள்!
@@ -36,6 +92,7 @@ const SuccessScreen = () => {
           </p>
         </div>
 
+        {/* Certificate Preview */}
         <div className="w-full bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
           <div className="h-2 bg-orange-700"></div>
 
@@ -54,9 +111,14 @@ const SuccessScreen = () => {
           </div>
         </div>
 
+        {/* Buttons */}
         <div className="w-full space-y-3 pt-2">
-          <button className="w-full bg-orange-700 text-white py-4 rounded-xl font-semibold shadow">
-            Download Certificate
+          <button
+            onClick={downloadCertificate}
+            disabled={loading}
+            className="w-full bg-orange-700 text-white py-4 rounded-xl font-semibold shadow disabled:opacity-50"
+          >
+            {loading ? "Downloading..." : "Download Certificate"}
           </button>
 
           <button className="w-full bg-gray-100 text-gray-700 py-4 rounded-xl font-medium">
