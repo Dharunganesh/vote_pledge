@@ -81,6 +81,8 @@ const PledgeScreen = () => {
           </h2>
         </div>
 
+        <p className="text-gray-600 text-sm"> Elections are the foundation of democracy. Your vote is your right and responsibility. </p>
+
         {/* Card */}
         <div className="bg-gray-100 rounded-3xl p-5 shadow-inner space-y-4">
 
