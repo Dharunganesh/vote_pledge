@@ -102,6 +102,8 @@ export default function UserDetails() {
       }
 
       setSuccessMessage('Saved successfully ✅')
+      localStorage.setItem("phone", phone)
+      navigate("/vote-pledge")
       setFormData(initialForm)
 
     } catch (err) {
