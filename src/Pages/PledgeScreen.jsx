@@ -17,7 +17,6 @@ const PledgeScreen = () => {
 
     setError("");
 
-    // ✅ Get phone from localStorage
     const phone = localStorage.getItem("phone");
 
     if (!phone) {
@@ -42,7 +41,6 @@ const PledgeScreen = () => {
 
       if (!res.ok) throw new Error(data.detail || "Failed");
 
-      // ✅ Navigate to success page
       navigate("/success");
 
     } catch (err) {
@@ -70,20 +68,20 @@ const PledgeScreen = () => {
         </div>
       </header>
 
-      <main className="px-5 py-6 space-y-6">
+      <main className="px-5 py-6 space-y-5">
 
+        {/* Title */}
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">வாக்காளர் உறுதிமொழி</h1>
-          <h2 className="text-lg font-semibold text-blue-700">Voter Pledge</h2>
+          <h1 className="text-3xl font-bold text-orange-600">
+            வாக்காளர் உறுதிமொழி
+          </h1>
+
+          <h2 className="text-lg font-semibold text-black mt-1">
+            Voter Pledge
+          </h2>
         </div>
 
-        <div className="border-l-2 border-gray-300 pl-3">
-          <p className="text-gray-600 text-sm">
-            Elections are the foundation of democracy. Your vote is your right and responsibility.
-          </p>
-        </div>
-
-        {/* Commitment Card */}
+        {/* Card */}
         <div className="bg-gray-100 rounded-3xl p-5 shadow-inner space-y-4">
 
           <div className="text-center">
@@ -107,12 +105,12 @@ const PledgeScreen = () => {
             <label
               key={i}
               className={`flex gap-3 p-4 rounded-xl border cursor-pointer transition
-              ${item.state ? "border-green-600 shadow-sm" : "border-gray-200"}`}
+              ${item.state ? "border-orange-600 shadow-sm" : "border-gray-200"}`}
             >
               <div
                 onClick={() => item.set(!item.state)}
                 className={`w-5 h-5 rounded border flex items-center justify-center
-                ${item.state ? "bg-green-600 border-green-600" : "border-gray-300"}`}
+                ${item.state ? "bg-orange-600 border-orange-600" : "border-gray-300"}`}
               >
                 {item.state && (
                   <svg viewBox="0 0 12 12" className="w-3 h-3 text-white" fill="none" stroke="currentColor" strokeWidth="3">
@@ -132,7 +130,7 @@ const PledgeScreen = () => {
 
           <button
             onClick={handleSubmit}
-            className="w-full bg-gradient-to-r from-green-900 to-blue-900 text-white py-4 rounded-full font-semibold shadow-lg active:scale-95 transition"
+            className="w-full bg-gradient-to-r from-orange-600 to-orange-500 text-white py-4 rounded-full font-semibold shadow-lg active:scale-95 transition"
           >
             உறுதிமொழி சமர்ப்பிக்கவும் / Submit Pledge
           </button>
