@@ -35,7 +35,6 @@ function calculateAge(dob) {
 function normalizePhoneNumber(phoneNumber) {
   const digits = phoneNumber.replace(/\D/g, '')
   if (digits.length === 10) return `+91${digits}`
-  if (digits.length > 10) return `+${digits}`
   return ''
 }
 
@@ -58,8 +57,15 @@ export default function UserDetails() {
 
     const phone = normalizePhoneNumber(formData.phone_number)
 
+    // ✅ Phone validation
     if (!phone) {
       setErrorMessage('Enter valid phone number')
+      return
+    }
+
+    // ✅ Age validation
+    if (!age || Number(age) < 18) {
+      setErrorMessage('Age must be 18+')
       return
     }
 
@@ -80,10 +86,15 @@ export default function UserDetails() {
         body: JSON.stringify(payload),
       })
 
-      if (!res.ok) throw new Error('Failed to save')
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.detail || 'Failed to save')
+      }
 
       setSuccessMessage('Saved successfully ✅')
       setFormData(initialForm)
+
     } catch (err) {
       setErrorMessage(err.message)
     } finally {
@@ -120,7 +131,7 @@ export default function UserDetails() {
           </p>
         </div>
 
-        {/* Form Card */}
+        {/* Form */}
         <div className="bg-white rounded-3xl p-8 md:p-12 shadow">
           <form className="space-y-8" onSubmit={handleSubmit}>
 
@@ -133,7 +144,6 @@ export default function UserDetails() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Enter your name"
                   className="w-full bg-gray-100 p-4 rounded-xl mt-2"
                   required
                 />
@@ -151,7 +161,7 @@ export default function UserDetails() {
                   required
                 />
               </div>
-              
+
               {/* Age */}
               <div>
                 <label className="text-sm font-semibold text-[#001d44]">வயது / Age</label>
