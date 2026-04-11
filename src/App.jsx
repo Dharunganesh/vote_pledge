@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Login from './Pages/Login'
 import UserDetails from './Pages/UserDetails'
+import PledgeScreen from "./Pages/PledgeScreen";
 import './App.css'
 
 function App() {
