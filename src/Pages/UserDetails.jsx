@@ -34,7 +34,17 @@ function calculateAge(dob) {
 
 function normalizePhoneNumber(phoneNumber) {
   const digits = phoneNumber.replace(/\D/g, '')
-  if (digits.length === 10) return `+91${digits}`
+
+  // 6379107405 → +916379107405
+  if (digits.length === 10) {
+    return `+91${digits}`
+  }
+
+  // +916379107405 or 916379107405 → +916379107405
+  if (digits.length === 12 && digits.startsWith('91')) {
+    return `+${digits}`
+  }
+
   return ''
 }
 
