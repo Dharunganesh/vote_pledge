@@ -8,7 +8,7 @@ function Login() {
     const navigate = useNavigate()
 
     const handleEnter = () => {
-        navigate("/home") // change if needed
+        navigate("/userDetails")
     }
 
     return (
