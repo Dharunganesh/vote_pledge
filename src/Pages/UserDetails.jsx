@@ -97,6 +97,7 @@ export default function UserDetails() {
       const data = await res.json()
 
       if (!res.ok) {
+        console.log("BACKEND ERROR:", data)
         throw new Error(data.detail || 'Failed to save')
       }
 
