@@ -137,12 +137,6 @@ export default function UserDetails() {
                 />
               </div>
 
-              {/* Age */}
-              <div>
-                <label className="text-sm font-semibold text-[#001d44]">வயது / Age</label>
-                <input value={age} readOnly className="w-full bg-gray-200 p-4 rounded-xl mt-2" />
-              </div>
-
               {/* DOB */}
               <div>
                 <label className="text-sm font-semibold text-[#001d44]">பிறந்த தேதி</label>
@@ -154,6 +148,12 @@ export default function UserDetails() {
                   className="w-full bg-gray-100 p-4 rounded-xl mt-2"
                   required
                 />
+              </div>
+              
+              {/* Age */}
+              <div>
+                <label className="text-sm font-semibold text-[#001d44]">வயது / Age</label>
+                <input value={age} readOnly className="w-full bg-gray-200 p-4 rounded-xl mt-2" />
               </div>
 
               {/* District */}
