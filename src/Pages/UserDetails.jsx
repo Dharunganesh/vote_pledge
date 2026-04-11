@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 const API_BASE_URL = import.meta.env.VITE_API_URL
 
 const initialForm = {
@@ -31,10 +32,8 @@ function calculateAge(dob) {
 
 function normalizePhoneNumber(phoneNumber) {
   const digits = phoneNumber.replace(/\D/g, '')
-
   if (digits.length === 10) return `+91${digits}`
   if (digits.length > 10) return `+${digits}`
-
   return ''
 }
 
@@ -91,30 +90,125 @@ export default function UserDetails() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow w-96 space-y-4">
-        <h2 className="text-xl font-bold">User Details</h2>
+    <div className="bg-[#f8f9fa] text-[#191c1d] min-h-screen flex flex-col">
+      
+      {/* Header */}
+      <header className="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-xl shadow-sm h-16 flex items-center justify-between px-6">
+        <span className="text-lg font-bold text-[#001d44]">
+          இராணிப்பேட்டை மாவட்டம் / Ranipet District
+        </span>
+      </header>
 
-        <input name="name" placeholder="Name" value={formData.name} onChange={handleChange} className="w-full p-2 border rounded" required />
-        <input type="date" name="dob" value={formData.dob} onChange={handleChange} className="w-full p-2 border rounded" required />
+      <main className="flex-grow pt-24 pb-12 px-4 md:px-8 max-w-4xl mx-auto w-full">
 
-        <input value={age} readOnly className="w-full p-2 border rounded bg-gray-100" />
+        {/* Title */}
+        <div className="mb-12">
+          <h1 className="text-4xl font-extrabold text-[#001d44]">
+            உங்கள் விவரங்களை <span className="text-[#6b9bef]">உறுதிப்படுத்தவும்</span>
+          </h1>
+        </div>
 
-        <input name="town" placeholder="Town" value={formData.town} onChange={handleChange} className="w-full p-2 border rounded" required />
+        {/* Form */}
+        <div className="bg-white rounded-2xl p-8 shadow">
+          <form className="space-y-6" onSubmit={handleSubmit}>
 
-        <input name="phone_number" placeholder="Phone" value={formData.phone_number} onChange={handleChange} className="w-full p-2 border rounded" required />
+            {/* Name */}
+            <input
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-100 rounded"
+              required
+            />
 
-        <button type="submit" disabled={submitting} className="w-full bg-blue-600 text-white p-2 rounded">
-          {submitting ? 'Saving...' : 'Submit'}
-        </button>
+            {/* DOB */}
+            <input
+              type="date"
+              name="dob"
+              value={formData.dob}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-100 rounded"
+              required
+            />
 
-        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-        {successMessage && <p className="text-green-500">{successMessage}</p>}
+            {/* Age */}
+            <input
+              value={age}
+              readOnly
+              className="w-full p-3 bg-gray-200 rounded"
+            />
 
-        <button type="button" onClick={() => navigate('/')} className="text-sm text-blue-500">
-          Go Back
-        </button>
-      </form>
+            {/* Town */}
+            <input
+              name="town"
+              placeholder="Town"
+              value={formData.town}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-100 rounded"
+              required
+            />
+
+            {/* Phone */}
+            <input
+              name="phone_number"
+              placeholder="Phone"
+              value={formData.phone_number}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-100 rounded"
+              required
+            />
+
+            {/* Gender */}
+            <div className="flex gap-4">
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  checked={formData.gender === 'male'}
+                  onChange={handleChange}
+                />
+                Male
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  checked={formData.gender === 'female'}
+                  onChange={handleChange}
+                />
+                Female
+              </label>
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full bg-[#001d44] text-white py-3 rounded-xl"
+            >
+              {submitting ? 'Saving...' : 'Continue'}
+            </button>
+
+            {/* Messages */}
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            {successMessage && <p className="text-green-500">{successMessage}</p>}
+
+            {/* Back */}
+            <button
+              type="button"
+              onClick={() => navigate('/')}
+              className="text-blue-500 text-sm"
+            >
+              Go Back
+            </button>
+
+          </form>
+        </div>
+      </main>
     </div>
   )
 }
