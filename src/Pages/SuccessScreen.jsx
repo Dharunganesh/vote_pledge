@@ -178,7 +178,7 @@ const SuccessScreen = () => {
                 font-medium 
                 hover:bg-gray-200
               "
-              onClick={shareBadge()}
+              onClick={() => shareBadge()}
             >
               Share Pledge
             </button>
