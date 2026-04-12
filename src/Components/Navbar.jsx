@@ -21,19 +21,12 @@ function Navbar() {
                 </div>
 
                 <div className='flex gap-8 text-lg font-semibold'>
-                    
+
                     <h1
                         onClick={() => navigate("/pledge")}
                         className={`cursor-pointer ${isActive("/pledge") ? "text-orange-600" : ""}`}
                     >
                         PLEDGE
-                    </h1>
-
-                    <h1
-                        onClick={() => navigate("/info")}
-                        className={`cursor-pointer ${isActive("/info") ? "text-orange-600" : ""}`}
-                    >
-                        INFO
                     </h1>
 
                     <h1
@@ -53,7 +46,7 @@ function Navbar() {
             </div>
 
             {/* MOBILE BOTTOM NAVBAR */}
-            <div className='md:hidden fixed bottom-0 left-0 w-full bg-white shadow-lg flex justify-around py-4 rounded-t-2xl'>
+            <div className='md:hidden fixed bottom-0 left-0 w-full bg-white shadow-lg flex justify-around py-4 rounded-t-4xl'>
 
                 <div
                     onClick={() => navigate("/pledge")}
@@ -61,14 +54,6 @@ function Navbar() {
                 >
                     <MdHowToVote size={25} />
                     <span className='text-sm'>உறுதிமொழி</span>
-                </div>
-
-                <div
-                    onClick={() => navigate("/info")}
-                    className={`flex flex-col gap-1 items-center cursor-pointer ${isActive("/info") ? "text-orange-600" : "text-gray-700"}`}
-                >
-                    <FaInfoCircle size={25} />
-                    <span className='text-sm'>தகவல்</span>
                 </div>
 
                 <div
