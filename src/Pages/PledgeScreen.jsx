@@ -63,8 +63,8 @@ const PledgeScreen = () => {
         flex-1 
         w-full max-w-3xl mx-auto 
         px-4 sm:px-6 md:px-8 
-        pt-20 sm:pt-24 md:pt-28 
-        pb-16
+        pt-10 sm:pt-14 md:pt-18 
+        pb-5
       ">
 
         {/* Back Button */}
