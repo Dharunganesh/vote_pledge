@@ -76,10 +76,9 @@ const SuccessScreen = () => {
         pb-10
       "
       >
-        {/* Back Button */}
         <div className="mb-3">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/pledge")}
             className="
               bg-orange-600 text-white 
               px-4 py-2 sm:px-5 
@@ -92,7 +91,6 @@ const SuccessScreen = () => {
           </button>
         </div>
 
-        {/* Content */}
         <div className="flex flex-col items-center text-center space-y-5 sm:space-y-6">
 
           {/* Success Icon */}
@@ -117,8 +115,6 @@ const SuccessScreen = () => {
               Thank you! You have pledged to be an ethical voter!
             </p>
           </div>
-
-          {/* Certificate Card */}
           <div
             className="
             w-full 
@@ -145,7 +141,6 @@ const SuccessScreen = () => {
             </div>
           </div>
 
-          {/* Buttons */}
           <div className="w-full space-y-3 pt-2">
 
             <button

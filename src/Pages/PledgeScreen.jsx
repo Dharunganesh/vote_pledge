@@ -58,7 +58,6 @@ const PledgeScreen = () => {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
 
-      {/* Main Container */}
       <main className="
         flex-1 
         w-full max-w-3xl mx-auto 
@@ -67,10 +66,9 @@ const PledgeScreen = () => {
         pb-5
       ">
 
-        {/* Back Button */}
         <div className="mb-4 flex justify-start">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/userDetails")}
             className="
               bg-orange-600 text-white 
               px-4 py-2 sm:px-5 
@@ -165,8 +163,6 @@ const PledgeScreen = () => {
               {error}
             </p>
           )}
-
-          {/* Submit Button */}
           <button
             onClick={handleSubmit}
             className="
