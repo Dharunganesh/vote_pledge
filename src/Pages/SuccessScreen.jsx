@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 const CERTIFICATE_API_URL = import.meta.env.VITE_CERTIFICATE_API_URL;
 
 const SuccessScreen = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
-  const userName = localStorage.getItem("name") || "Citizen";
+  const location = useLocation();
+  const userName = location.state?.name || localStorage.getItem("name") || "Citizen";
 
   const downloadCertificate = async () => {
     if (!CERTIFICATE_API_URL) {
