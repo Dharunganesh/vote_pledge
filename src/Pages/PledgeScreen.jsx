@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Navbar from "../Components/Navbar";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -67,23 +68,7 @@ const PledgeScreen = () => {
 
   return (
     <div className="flex flex-col flex-1 pb-24 bg-gray-50">
-
-      {/* Header */}
-      <header className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3">
-        <div className="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center">
-          <svg viewBox="0 0 24 24" className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="3" y="3" width="7" height="7" />
-            <rect x="14" y="3" width="7" height="7" />
-            <rect x="3" y="14" width="7" height="7" />
-            <rect x="14" y="14" width="7" height="7" />
-          </svg>
-        </div>
-        <div>
-          <p className="text-[11px] text-gray-500">இராணிப்பேட்டை மாவட்டம் /</p>
-          <p className="text-sm font-semibold">Ranipet District</p>
-        </div>
-      </header>
-
+      <Navbar />
       <main className="px-5 py-6 space-y-5">
 
         {/* Title */}
