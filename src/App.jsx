@@ -5,6 +5,7 @@ import UserDetails from './Pages/UserDetails'
 import PledgeScreen from "./Pages/PledgeScreen";
 import SuccessScreen from "./Pages/SuccessScreen";
 import Gallery from "./Pages/Gallery";
+import InfoPage from "./Pages/InfoPage";
 import './App.css'
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
                 <Route path='/pledge' element={<PledgeScreen />} />
                 <Route path='/success' element={<SuccessScreen />} />
                 <Route path="/gallery" element={<Gallery />} />
+                <Route path="/info" element={<InfoPage />} />
             </Routes>
         </>
     )
