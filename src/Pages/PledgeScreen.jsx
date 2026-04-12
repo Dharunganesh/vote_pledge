@@ -63,7 +63,7 @@ const PledgeScreen = () => {
         flex-1 
         w-full max-w-3xl mx-auto 
         px-4 sm:px-6 md:px-8 
-        pt-10 sm:pt-14 md:pt-18 
+        pt-5 sm:pt-5 md:pt-5 
         pb-5
       ">
 
