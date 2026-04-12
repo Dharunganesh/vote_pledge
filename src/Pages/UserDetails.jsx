@@ -128,17 +128,16 @@ export default function UserDetails() {
         <div>
           <button className='bg-orange-600 w-max px-5 text-sm text-white py-2 rounded-full mb-1 hover:bg-orange-700' onClick={() => navigate("/")}>Back</button>
         </div>
-        <div className="mb-8 sm:mb-12 text-center sm:text-left">
+        <div className="mb-8 sm:mb-12 lg:mb-3 text-center sm:text-left">
           <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-orange-600 leading-tight">
             உங்கள் விவரங்களை{" "}
-            <span className="text-black">உறுதிப்படுத்தவும்</span>
             <br />
             <span className="text-lg sm:text-xl md:text-2xl opacity-80">
               Confirm Your Details
             </span>
           </h1>
 
-          <p className="text-[#43474f] mt-3 max-w-2xl text-sm sm:text-base md:text-lg mx-auto sm:mx-0">
+          <p className="text-[#43474f] mt-3 lg:mt-1 max-w-2xl text-sm sm:text-base md:text-lg mx-auto sm:mx-0">
             வாக்காளர் உறுதிமொழி ஏற்பதற்கு முன் உங்கள் விவரங்கள் சரியாக இருப்பதை உறுதி செய்யவும்.
           </p>
         </div>
