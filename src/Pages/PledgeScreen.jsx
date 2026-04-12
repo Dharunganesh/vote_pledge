@@ -15,7 +15,6 @@ const PledgeScreen = () => {
   const phone = location.state?.phone || localStorage.getItem("phone");
   const name = location.state?.name || localStorage.getItem("name");
 
-  // ✅ Route protection
   useEffect(() => {
     if (!phone || !name) {
       navigate("/userDetails");
@@ -30,17 +29,10 @@ const PledgeScreen = () => {
 
     setError("");
 
-    if (!phone) {
-      setError("User not found. Please login again.");
-      return;
-    }
-
     try {
       const res = await fetch(`${API_BASE_URL}/update-pledge`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           phone_number: phone,
           will_vote: checked1,
@@ -49,7 +41,6 @@ const PledgeScreen = () => {
       });
 
       const data = await res.json();
-
       if (!res.ok) throw new Error(data.detail || "Failed");
 
       localStorage.removeItem("phone");
@@ -64,33 +55,61 @@ const PledgeScreen = () => {
   };
 
   return (
-    <div className="flex flex-col flex-1 pb-24 bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
-      <div>
-        <button className='bg-orange-600 w-max px-5 text-sm text-white py-2 rounded-full mb-1 hover:bg-orange-700' onClick={() => navigate("/")}>Back</button>
-      </div>
-      <main className="px-5 py-6 space-y-5">
+
+      {/* Main Container */}
+      <main className="
+        flex-1 
+        w-full max-w-3xl mx-auto 
+        px-4 sm:px-6 md:px-8 
+        pt-20 sm:pt-24 md:pt-28 
+        pb-16
+      ">
+
+        {/* Back Button */}
+        <div className="mb-4 flex justify-start">
+          <button
+            onClick={() => navigate("/")}
+            className="
+              bg-orange-600 text-white 
+              px-4 py-2 sm:px-5 
+              text-xs sm:text-sm md:text-base 
+              rounded-full 
+              hover:bg-orange-700 transition
+            "
+          >
+            Back
+          </button>
+        </div>
 
         {/* Title */}
-        <div>
-          <h1 className="text-3xl font-bold text-orange-600">
+        <div className="mb-4 sm:mb-6">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-orange-600">
             வாக்காளர் உறுதிமொழி
           </h1>
 
-          <h2 className="text-lg font-semibold text-black mt-1">
+          <h2 className="text-base sm:text-lg md:text-xl font-semibold text-black mt-1">
             Voter Pledge
           </h2>
         </div>
 
-        <p className="text-gray-600 text-sm">
+        <p className="text-gray-600 text-sm sm:text-base md:text-lg mb-4 sm:mb-6">
           Elections are the foundation of democracy. Your vote is your right and responsibility.
         </p>
 
         {/* Card */}
-        <div className="bg-gray-100 rounded-3xl p-5 shadow-inner space-y-4">
+        <div className="
+          bg-gray-100 
+          rounded-2xl sm:rounded-3xl 
+          p-4 sm:p-6 md:p-8 
+          shadow-inner space-y-4 sm:space-y-5
+        ">
 
           <div className="text-center">
-            <h3 className="text-lg font-bold">Digital Commitment</h3>
+            <h3 className="text-base sm:text-lg md:text-xl font-bold">
+              Digital Commitment
+            </h3>
           </div>
 
           {[
@@ -109,13 +128,19 @@ const PledgeScreen = () => {
           ].map((item, i) => (
             <label
               key={i}
-              className={`flex gap-3 p-4 rounded-xl border cursor-pointer transition
-              ${item.state ? "border-orange-600 shadow-sm" : "border-gray-200"}`}
+              onClick={() => item.set(!item.state)}
+              className={`
+                flex gap-3 sm:gap-4 
+                p-3 sm:p-4 
+                rounded-xl border cursor-pointer transition
+                ${item.state ? "border-orange-600 shadow-sm" : "border-gray-200"}
+              `}
             >
               <div
-                onClick={() => item.set(!item.state)}
-                className={`w-5 h-5 rounded border flex items-center justify-center
-                ${item.state ? "bg-orange-600 border-orange-600" : "border-gray-300"}`}
+                className={`
+                  w-5 h-5 flex items-center justify-center rounded border
+                  ${item.state ? "bg-orange-600 border-orange-600" : "border-gray-300"}
+                `}
               >
                 {item.state && (
                   <svg viewBox="0 0 12 12" className="w-3 h-3 text-white" fill="none" stroke="currentColor" strokeWidth="3">
@@ -125,17 +150,37 @@ const PledgeScreen = () => {
               </div>
 
               <div>
-                <p className="font-semibold text-sm">{item.ta}</p>
-                <p className="text-xs text-gray-500">{item.en}</p>
+                <p className="font-semibold text-xs sm:text-sm md:text-base">
+                  {item.ta}
+                </p>
+                <p className="text-[10px] sm:text-xs text-gray-500">
+                  {item.en}
+                </p>
               </div>
             </label>
           ))}
 
-          {error && <p className="text-red-500 text-xs text-center">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-xs sm:text-sm text-center">
+              {error}
+            </p>
+          )}
 
+          {/* Submit Button */}
           <button
             onClick={handleSubmit}
-            className="w-full bg-gradient-to-r from-orange-600 to-orange-500 text-white py-4 rounded-full font-semibold shadow-lg active:scale-95 transition"
+            className="
+              w-full 
+              py-3 sm:py-4 
+              text-sm sm:text-base md:text-lg 
+              bg-gradient-to-r from-orange-600 to-orange-500 
+              text-white 
+              rounded-full 
+              font-semibold 
+              shadow-lg 
+              active:scale-95 
+              transition
+            "
           >
             உறுதிமொழி சமர்ப்பிக்கவும் / Submit Pledge
           </button>
