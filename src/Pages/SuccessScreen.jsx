@@ -65,7 +65,7 @@ const SuccessScreen = () => {
 
 
   const shareBadge = () => {
-    const message = `I just took the Voter Pledge and committed to ethical voting 🇮🇳\n\nJoin me here:\nhttps://vote-pledge.vercel.app`;
+    const message = `வாக்காளர் உறுதிமொழி\nI just took the Voter Pledge and committed to ethical voting 🇮🇳\n\nJoin me here:\nhttps://vote-pledge.vercel.app`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, "_blank");
   }
