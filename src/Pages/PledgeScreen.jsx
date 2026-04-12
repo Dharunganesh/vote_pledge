@@ -12,7 +12,6 @@ const PledgeScreen = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ✅ Get user data (works for both state + fallback)
   const phone = location.state?.phone || localStorage.getItem("phone");
   const name = location.state?.name || localStorage.getItem("name");
 
@@ -53,11 +52,9 @@ const PledgeScreen = () => {
 
       if (!res.ok) throw new Error(data.detail || "Failed");
 
-      // ✅ Clear storage after use
       localStorage.removeItem("phone");
       localStorage.removeItem("name");
 
-      // ✅ Pass name to success screen
       navigate("/success", { state: { name } });
 
     } catch (err) {

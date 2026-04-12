@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Navbar from "../Components/Navbar";
 const CERTIFICATE_API_URL = import.meta.env.VITE_CERTIFICATE_API_URL;
 
 const SuccessScreen = () => {
@@ -68,26 +69,7 @@ const SuccessScreen = () => {
 
   return (
     <div className="flex flex-col flex-1 pb-10 bg-orange-50">
-
-      {/* Header */}
-      <header className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3">
-        <div className="w-9 h-9 bg-orange-100 rounded-lg flex items-center justify-center">
-          <svg
-            viewBox="0 0 24 24"
-            className="w-5 h-5 text-orange-700"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <rect x="3" y="3" width="7" height="7" />
-            <rect x="14" y="3" width="7" height="7" />
-            <rect x="3" y="14" width="7" height="7" />
-            <rect x="14" y="14" width="7" height="7" />
-          </svg>
-        </div>
-        <p className="text-sm font-semibold">Ranipet District</p>
-      </header>
-
+      <Navbar />
       <main className="px-6 py-8 flex flex-col items-center text-center space-y-6">
 
         {/* Success Icon */}
