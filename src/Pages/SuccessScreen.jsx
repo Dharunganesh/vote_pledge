@@ -72,8 +72,8 @@ const SuccessScreen = () => {
         flex-1 
         w-full max-w-3xl mx-auto 
         px-4 sm:px-6 md:px-8 
-        pt-[70px] sm:pt-[80px] 
-        pb-16
+        pt-5 sm:pt-5 md:pt-5
+        pb-10
       "
       >
         {/* Back Button */}
