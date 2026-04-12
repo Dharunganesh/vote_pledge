@@ -9,7 +9,7 @@ const PledgeScreen = () => {
   const [checked2, setChecked2] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
+  const location = useLocation();
   const handleSubmit = async () => {
     if (!checked1 || !checked2) {
       setError("Please accept both pledge commitments to proceed.");
@@ -18,7 +18,6 @@ const PledgeScreen = () => {
 
     setError("");
 
-    const location = useLocation();
 
     const phone = location.state?.phone || localStorage.getItem("phone");
     
