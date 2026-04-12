@@ -40,7 +40,7 @@ const PledgeScreen = () => {
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.detail || "Failed");
-
+      localStorage.removeItem("phone");
       navigate("/success");
 
     } catch (err) {
