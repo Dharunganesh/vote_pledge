@@ -4,6 +4,7 @@ import Login from './Pages/Login'
 import UserDetails from './Pages/UserDetails'
 import PledgeScreen from "./Pages/PledgeScreen";
 import SuccessScreen from "./Pages/SuccessScreen";
+import Gallery from "./Pages/Gallery";
 import './App.css'
 
 function App() {
