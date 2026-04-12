@@ -70,6 +70,9 @@ const SuccessScreen = () => {
   return (
     <div className="flex flex-col flex-1 pb-10 bg-orange-50">
       <Navbar />
+      <div>
+        <button className='bg-orange-600 w-max px-5 text-sm text-white py-2 rounded-full mb-1 hover:bg-orange-700' onClick={() => navigate("/")}>Back</button>
+      </div>
       <main className="px-6 py-8 flex flex-col items-center text-center space-y-6">
 
         {/* Success Icon */}
