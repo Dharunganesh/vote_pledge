@@ -12,8 +12,8 @@ import image8 from "../assets/Gallery/image8.jpeg";
 import image9 from "../assets/Gallery/image9.jpeg";
 import image10 from "../assets/Gallery/image10.jpeg";
 import image11 from "../assets/Gallery/image11.jpeg";
-import video1 from "../assets/Gallery/video1.mp4";
-import video2 from "../assets/Gallery/video2.mp4";
+import video1 from "../assets/Gallery/Video1.mp4";
+import video2 from "../assets/Gallery/Video2.mp4";
 
 const carouselImages = [image1, image2, image3, image4, image5, image6, image7, image8];
 const gridImages = [image9, image10, image11];
