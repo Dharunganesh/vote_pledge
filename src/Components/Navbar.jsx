@@ -26,14 +26,14 @@ function Navbar() {
                         onClick={() => navigate("/pledge")}
                         className={`cursor-pointer ${isActive("/pledge") ? "text-orange-600" : ""}`}
                     >
-                        PLEDGE
+                        உறுதிமொழி / PLEDGE
                     </h1>
 
                     <h1
                         onClick={() => navigate("/gallery")}
                         className={`cursor-pointer ${isActive("/gallery") ? "text-orange-600" : ""}`}
                     >
-                        GALLERY
+                        எங்கள் பணிகள் / GALLERY
                     </h1>
 
                 </div>

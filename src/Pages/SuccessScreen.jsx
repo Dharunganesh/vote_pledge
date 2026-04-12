@@ -63,6 +63,13 @@ const SuccessScreen = () => {
     }
   };
 
+
+  const shareBadge = () => {
+    const message = `I just took the Voter Pledge and committed to ethical voting 🇮🇳\n\nJoin me here:\nhttps://vote-pledge.vercel.app`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`
+    window.open(whatsappUrl, "_blank");
+  }
+
   return (
     <div className="min-h-screen bg-[#f8f9fa] flex flex-col">
       <Navbar />
@@ -171,6 +178,7 @@ const SuccessScreen = () => {
                 font-medium 
                 hover:bg-gray-200
               "
+              onClick={shareBadge()}
             >
               Share Pledge
             </button>
