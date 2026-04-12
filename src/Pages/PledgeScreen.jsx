@@ -46,7 +46,7 @@ const PledgeScreen = () => {
 
       if (!res.ok) throw new Error(data.detail || "Failed");
       localStorage.removeItem("phone");
-      navigate("/success");
+      navigate("/success", {state: { name }});
 
     } catch (err) {
       console.error(err);
