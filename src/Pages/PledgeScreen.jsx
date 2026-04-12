@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -8,16 +7,21 @@ const PledgeScreen = () => {
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
   const location = useLocation();
-  useEffect(() => {
+
+  // ✅ Get user data (works for both state + fallback)
   const phone = location.state?.phone || localStorage.getItem("phone");
   const name = location.state?.name || localStorage.getItem("name");
 
-  if (!phone || !name) {
-    navigate("/userDetails");
-  }
-}, []);
+  // ✅ Route protection
+  useEffect(() => {
+    if (!phone || !name) {
+      navigate("/userDetails");
+    }
+  }, [phone, name, navigate]);
+
   const handleSubmit = async () => {
     if (!checked1 || !checked2) {
       setError("Please accept both pledge commitments to proceed.");
@@ -25,7 +29,6 @@ const PledgeScreen = () => {
     }
 
     setError("");
-
 
     if (!phone) {
       setError("User not found. Please login again.");
@@ -48,9 +51,13 @@ const PledgeScreen = () => {
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.detail || "Failed");
+
+      // ✅ Clear storage after use
       localStorage.removeItem("phone");
       localStorage.removeItem("name");
-      navigate("/success", {state: { name }});
+
+      // ✅ Pass name to success screen
+      navigate("/success", { state: { name } });
 
     } catch (err) {
       console.error(err);
@@ -90,7 +97,9 @@ const PledgeScreen = () => {
           </h2>
         </div>
 
-        <p className="text-gray-600 text-sm"> Elections are the foundation of democracy. Your vote is your right and responsibility. </p>
+        <p className="text-gray-600 text-sm">
+          Elections are the foundation of democracy. Your vote is your right and responsibility.
+        </p>
 
         {/* Card */}
         <div className="bg-gray-100 rounded-3xl p-5 shadow-inner space-y-4">
