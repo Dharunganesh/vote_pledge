@@ -10,6 +10,14 @@ const PledgeScreen = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  useEffect(() => {
+  const phone = location.state?.phone || localStorage.getItem("phone");
+  const name = location.state?.name || localStorage.getItem("name");
+
+  if (!phone || !name) {
+    navigate("/userDetails");
+  }
+}, []);
   const handleSubmit = async () => {
     if (!checked1 || !checked2) {
       setError("Please accept both pledge commitments to proceed.");
@@ -18,10 +26,6 @@ const PledgeScreen = () => {
 
     setError("");
 
-
-    const phone = location.state?.phone || localStorage.getItem("phone");
-    
-    const name = location.state?.name || localStorage.getItem("name");
 
     if (!phone) {
       setError("User not found. Please login again.");
