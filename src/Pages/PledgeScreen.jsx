@@ -66,6 +66,9 @@ const PledgeScreen = () => {
   return (
     <div className="flex flex-col flex-1 pb-24 bg-gray-50">
       <Navbar />
+      <div>
+        <button className='bg-orange-600 w-max px-5 text-sm text-white py-2 rounded-full mb-1 hover:bg-orange-700' onClick={() => navigate("/")}>Back</button>
+      </div>
       <main className="px-5 py-6 space-y-5">
 
         {/* Title */}
