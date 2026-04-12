@@ -143,14 +143,12 @@ export default function UserDetails() {
           </p>
         </div>
 
-        {/* Form */}
         <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-10 shadow">
 
           <form className="space-y-6 sm:space-y-8" onSubmit={handleSubmit}>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
 
-              {/* Name */}
               <div>
                 <label className="text-xs sm:text-sm font-semibold text-[#001d44]">பெயர் / Name</label>
                 <input
