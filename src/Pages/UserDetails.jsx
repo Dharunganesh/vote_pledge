@@ -105,10 +105,13 @@ export default function UserDetails() {
 
       setSuccessMessage('Saved successfully ✅')
 
-      localStorage.setItem("phone", phone)
-      localStorage.setItem("name", formData.name)
 
-      navigate("/pledge")
+      navigate("/pledge", {
+                state: {
+                  phone: phone,
+                  name: formData.name
+                }
+              });
 
       setFormData(initialForm)
 
