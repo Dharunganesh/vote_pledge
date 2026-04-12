@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -17,7 +18,11 @@ const PledgeScreen = () => {
 
     setError("");
 
-    const phone = localStorage.getItem("phone");
+    const location = useLocation();
+
+    const phone = location.state?.phone || localStorage.getItem("phone");
+    
+    const name = location.state?.name || localStorage.getItem("name");
 
     if (!phone) {
       setError("User not found. Please login again.");
