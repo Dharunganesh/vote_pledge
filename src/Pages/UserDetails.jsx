@@ -50,7 +50,6 @@ export default function UserDetails() {
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
 
-  // ✅ Auto-fill phone from localStorage
   useEffect(() => {
     const savedPhone = localStorage.getItem("phone")
     if (savedPhone) {
@@ -107,11 +106,11 @@ export default function UserDetails() {
 
 
       navigate("/pledge", {
-                state: {
-                  phone: phone,
-                  name: formData.name
-                }
-              });
+        state: {
+          phone: phone,
+          name: formData.name
+        }
+      });
 
       setFormData(initialForm)
 
@@ -125,10 +124,10 @@ export default function UserDetails() {
   return (
     <div className="bg-[#f8f9fa] text-[#191c1d] min-h-screen flex flex-col">
       <Navbar />
-
-      <main className="flex-grow pt-20 sm:pt-24 pb-28 px-3 sm:px-6 md:px-8 max-w-5xl mx-auto w-full">
-
-        {/* Title */}
+      <main className="grow pt-5 lg:pt-5 sm:pt-24 pb-28 px-3 sm:px-6 md:px-8 md:py-5 max-w-5xl mx-auto w-full">
+        <div>
+          <button className='bg-orange-600 w-max px-5 text-sm text-white py-2 rounded-full mb-1 hover:bg-orange-700' onClick={() => navigate("/")}>Back</button>
+        </div>
         <div className="mb-8 sm:mb-12 text-center sm:text-left">
           <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-orange-600 leading-tight">
             உங்கள் விவரங்களை{" "}
@@ -163,7 +162,6 @@ export default function UserDetails() {
                 />
               </div>
 
-              {/* DOB */}
               <div>
                 <label className="text-xs sm:text-sm font-semibold text-[#001d44]">பிறந்த தேதி</label>
                 <input
@@ -176,13 +174,11 @@ export default function UserDetails() {
                 />
               </div>
 
-              {/* Age */}
               <div>
                 <label className="text-xs sm:text-sm font-semibold text-[#001d44]">வயது / Age</label>
                 <input value={age} readOnly className="w-full bg-gray-200 p-3 sm:p-4 rounded-xl mt-2" />
               </div>
 
-              {/* District */}
               <div>
                 <label className="text-xs sm:text-sm font-semibold text-[#001d44]">மாவட்டம்</label>
                 <div className="bg-gray-200 p-3 sm:p-4 rounded-xl mt-2 font-bold">
@@ -190,7 +186,6 @@ export default function UserDetails() {
                 </div>
               </div>
 
-              {/* Town */}
               <div>
                 <label className="text-xs sm:text-sm font-semibold text-[#001d44]">ஊர் / Town</label>
                 <input
@@ -202,7 +197,6 @@ export default function UserDetails() {
                 />
               </div>
 
-              {/* Block */}
               <div>
                 <label className="text-xs sm:text-sm font-semibold text-[#001d44]">வட்டம் / Block</label>
                 <select
@@ -218,7 +212,6 @@ export default function UserDetails() {
                 </select>
               </div>
 
-              {/* Phone */}
               <div>
                 <label className="text-xs sm:text-sm font-semibold text-[#001d44]">Phone</label>
                 <input
@@ -230,7 +223,6 @@ export default function UserDetails() {
                 />
               </div>
 
-              {/* Gender */}
               <div>
                 <label className="text-xs sm:text-sm font-semibold text-[#001d44]">Gender</label>
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 mt-2">
@@ -250,11 +242,9 @@ export default function UserDetails() {
 
             </div>
 
-            {/* Messages */}
             {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
             {successMessage && <p className="text-green-500 text-sm">{successMessage}</p>}
 
-            {/* Continue Button */}
             <div className="mt-6 sm:mt-8 flex justify-center sm:justify-end">
               <button
                 type="submit"
