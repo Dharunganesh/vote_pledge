@@ -98,7 +98,7 @@ export default function UserDetails() {
       // 🔥 Supabase UPSERT
       const { data, error } = await supabase
         .from('voters')
-        .upsert(payload)
+        .upsert(payload, { onConflict: "phone_number" })
         .select()
 
       if (error) throw error
