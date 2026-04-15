@@ -121,7 +121,7 @@ const PledgeScreen = () => {
               state: checked2,
               set: setChecked2,
               ta: "வாக்களிப்பதற்காக நான் எந்தப் பணத்தையும் ஏற்றுக்கொள்ள மாட்டேன்.",
-              en: "I will not accept any bribe or incentives"
+              en: "I will not accept any money or incentives"
             }
           ].map((item, i) => (
             <label
