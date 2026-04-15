@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../Components/Navbar'
-
-const API_BASE_URL = import.meta.env.VITE_API_URL
+import { supabase } from '../supabaseClient'
 
 const initialForm = {
   name: '',
@@ -80,9 +79,15 @@ export default function UserDetails() {
     }
 
     const payload = {
-      ...formData,
+      name: formData.name,
+      dob: formData.dob,
       age: Number(age),
+      gender: formData.gender,
+      block: formData.block,
+      town: formData.town,
       phone_number: phone,
+      will_vote: false,
+      wont_accept_bribe: false
     }
 
     try {
@@ -90,31 +95,27 @@ export default function UserDetails() {
       setErrorMessage('')
       setSuccessMessage('')
 
-      const res = await fetch(`${API_BASE_URL}/add-user`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
+      // 🔥 Supabase UPSERT
+      const { data, error } = await supabase
+        .from('voters')
+        .upsert(payload)
+        .select()
 
-      const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(data.detail || 'Failed to save')
-      }
+      if (error) throw error
 
       setSuccessMessage('Saved successfully ✅')
-
 
       navigate("/pledge", {
         state: {
           phone: phone,
           name: formData.name
         }
-      });
+      })
 
       setFormData(initialForm)
 
     } catch (err) {
+      console.error(err)
       setErrorMessage(err.message)
     } finally {
       setSubmitting(false)
@@ -124,14 +125,21 @@ export default function UserDetails() {
   return (
     <div className="bg-[#f8f9fa] text-[#191c1d] min-h-screen flex flex-col">
       <Navbar />
+
       <main className="grow pt-5 lg:pt-5 sm:pt-24 pb-28 px-3 sm:px-6 md:px-8 md:py-5 max-w-5xl mx-auto w-full">
+
         <div>
-          <button className='bg-orange-600 w-max px-5 text-sm text-white py-2 rounded-full mb-1 hover:bg-orange-700' onClick={() => navigate("/")}>Back</button>
+          <button
+            className='bg-orange-600 w-max px-5 text-sm text-white py-2 rounded-full mb-1 hover:bg-orange-700'
+            onClick={() => navigate("/")}
+          >
+            Back
+          </button>
         </div>
+
         <div className="mb-8 sm:mb-12 lg:mb-3 text-center sm:text-left">
           <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-orange-600 leading-tight">
-            உங்கள் விவரங்களை{" "}
-            <br />
+            உங்கள் விவரங்களை <br />
             <span className="text-lg sm:text-xl md:text-2xl opacity-80">
               Confirm Your Details
             </span>
@@ -173,7 +181,11 @@ export default function UserDetails() {
 
               <div>
                 <label className="text-xs sm:text-sm font-semibold text-[#001d44]">வயது / Age</label>
-                <input value={age} readOnly className="w-full bg-gray-200 p-3 sm:p-4 rounded-xl mt-2" />
+                <input
+                  value={age}
+                  readOnly
+                  className="w-full bg-gray-200 p-3 sm:p-4 rounded-xl mt-2"
+                />
               </div>
 
               <div>
@@ -224,14 +236,24 @@ export default function UserDetails() {
                 <label className="text-xs sm:text-sm font-semibold text-[#001d44]">Gender</label>
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 mt-2">
                   <label className="flex items-center gap-2">
-                    <input type="radio" name="gender" value="male"
-                      checked={formData.gender === 'male'} onChange={handleChange} />
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="male"
+                      checked={formData.gender === 'male'}
+                      onChange={handleChange}
+                    />
                     Male
                   </label>
 
                   <label className="flex items-center gap-2">
-                    <input type="radio" name="gender" value="female"
-                      checked={formData.gender === 'female'} onChange={handleChange} />
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="female"
+                      checked={formData.gender === 'female'}
+                      onChange={handleChange}
+                    />
                     Female
                   </label>
                 </div>
