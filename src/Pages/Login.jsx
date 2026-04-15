@@ -16,7 +16,6 @@ function Login() {
 
             <Navbar />
 
-            {/* Logos */}
             <div className='flex justify-between'>
                 <img
                     src={ecilogo}
@@ -30,7 +29,6 @@ function Login() {
                 />
             </div>
 
-            {/* Main Content */}
             <div className='grow flex flex-col items-center px-5 py-6 z-10 mt-10'>
 
                 <h1 className='text-2xl font-bold text-center px-5 py-5 rounded-2xl mt-30 text-orange-600 md:text-4xl'>

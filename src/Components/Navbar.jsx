@@ -13,9 +13,8 @@ function Navbar() {
 
     return (
         <>
-            {/* DESKTOP NAVBAR */}
             <div className='hidden md:flex justify-between items-center px-6 py-6 shadow bg-white'>
-                <div className='flex items-center gap-2 text-xl'>
+                <div className='flex items-center gap-2 text-xl cursor-pointer' onClick={() => navigate("/")}>
                     <BsBank size={28} />
                     <h1>இராணிப்பேட்டை மாவட்டம் / Ranipet District</h1>
                 </div>
@@ -39,13 +38,11 @@ function Navbar() {
                 </div>
             </div>
 
-            {/* MOBILE NAVBAR (TOP) */}
             <div className='md:hidden flex items-center gap-3 text-xl px-4 py-4 bg-white shadow'>
                 <BsBank size={28} />
                 <h1 className='text-sm'>இராணிப்பேட்டை மாவட்டம் / Ranipet District</h1>
             </div>
 
-            {/* MOBILE BOTTOM NAVBAR */}
             <div className='md:hidden fixed bottom-0 left-0 w-full bg-white shadow-lg flex justify-around py-4 rounded-t-4xl'>
 
                 <div
