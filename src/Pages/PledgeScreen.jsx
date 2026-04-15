@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../Components/Navbar";
-
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+import { supabase } from "../supabaseClient";
 
 const PledgeScreen = () => {
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,19 +30,25 @@ const PledgeScreen = () => {
     setError("");
 
     try {
-      const res = await fetch(`${API_BASE_URL}/update-pledge`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          phone_number: phone,
+      setLoading(true);
+
+      // 🔥 Supabase update
+      const { data, error } = await supabase
+        .from("voters")
+        .update({
           will_vote: checked1,
           wont_accept_bribe: checked2,
-        }),
-      });
+        })
+        .eq("phone_number", phone)
+        .select();
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.detail || "Failed");
+      if (error) throw error;
 
+      if (!data || data.length === 0) {
+        throw new Error("User not found");
+      }
+
+      // ✅ Clear local storage
       localStorage.removeItem("phone");
       localStorage.removeItem("name");
 
@@ -51,6 +57,8 @@ const PledgeScreen = () => {
     } catch (err) {
       console.error(err);
       setError("Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,24 +66,13 @@ const PledgeScreen = () => {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
 
-      <main className="
-        flex-1 
-        w-full max-w-3xl mx-auto 
-        px-4 sm:px-6 md:px-8 
-        pt-5 sm:pt-5 md:pt-5 
-        pb-5
-      ">
+      <main className="flex-1 w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-8 pt-5 pb-5">
 
+        {/* Back Button */}
         <div className="mb-4 flex justify-start">
           <button
             onClick={() => navigate("/userDetails")}
-            className="
-              bg-orange-600 text-white 
-              px-4 py-2 sm:px-5 
-              text-xs sm:text-sm md:text-base 
-              rounded-full 
-              hover:bg-orange-700 transition
-            "
+            className="bg-orange-600 text-white px-4 py-2 sm:px-5 text-xs sm:text-sm md:text-base rounded-full hover:bg-orange-700 transition"
           >
             Back
           </button>
@@ -97,12 +94,7 @@ const PledgeScreen = () => {
         </p>
 
         {/* Card */}
-        <div className="
-          bg-gray-100 
-          rounded-2xl sm:rounded-3xl 
-          p-4 sm:p-6 md:p-8 
-          shadow-inner space-y-4 sm:space-y-5
-        ">
+        <div className="bg-gray-100 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-inner space-y-4 sm:space-y-5">
 
           <div className="text-center">
             <h3 className="text-base sm:text-lg md:text-xl font-bold">
@@ -128,9 +120,7 @@ const PledgeScreen = () => {
               key={i}
               onClick={() => item.set(!item.state)}
               className={`
-                flex gap-3 sm:gap-4 
-                p-3 sm:p-4 
-                rounded-xl border cursor-pointer transition
+                flex gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border cursor-pointer transition
                 ${item.state ? "border-orange-600 shadow-sm" : "border-gray-200"}
               `}
             >
@@ -163,23 +153,15 @@ const PledgeScreen = () => {
               {error}
             </p>
           )}
+
           <button
             onClick={handleSubmit}
-            className="
-              w-full 
-              py-3 sm:py-4 
-              text-sm sm:text-base md:text-lg 
-              bg-gradient-to-r from-orange-600 to-orange-500 
-              text-white 
-              rounded-full 
-              font-semibold 
-              shadow-lg 
-              active:scale-95 
-              transition
-            "
+            disabled={loading}
+            className="w-full py-3 sm:py-4 text-sm sm:text-base md:text-lg bg-gradient-to-r from-orange-600 to-orange-500 text-white rounded-full font-semibold shadow-lg active:scale-95 transition"
           >
-            உறுதிமொழி சமர்ப்பிக்கவும் / Submit Pledge
+            {loading ? "Submitting..." : "உறுதிமொழி சமர்ப்பிக்கவும் / Submit Pledge"}
           </button>
+
         </div>
 
       </main>
