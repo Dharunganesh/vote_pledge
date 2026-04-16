@@ -4,7 +4,7 @@ import Navbar from '../Components/Navbar'
 import { supabase } from '../supabaseClient'
 
 const PANCHAYATS = {
-  Arakonam: [
+  Arakkonam: [
 "AMBARISHIPURAM",
 "AMMANOOR",
 "ANAIKATAPUTHUR",
