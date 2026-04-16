@@ -516,9 +516,9 @@ export default function UserDetails() {
                         <option>Arcot</option>
                         <option>Kaveripakkam</option>
                         <option>Nemili</option>
-                        <option>Sholingur</option>
+                        <option>Sholinghur</option>
                         <option>Thimiri</option>
-                        <option>Walaja</option>
+                        <option>Walajah</option>
                       </select>
                     </div>
                 
