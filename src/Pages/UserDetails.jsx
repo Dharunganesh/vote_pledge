@@ -3,6 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import Navbar from '../Components/Navbar'
 import { supabase } from '../supabaseClient'
 
+const PANCHAYATS = {
+  Arakkonam: ["AMBARISHIPURAM","AMMANOOR","ANAIKATAPUTHUR","ANAIPAKKAM","ANANTHAPURAM","ANWARTHIGANPET","ASAMANDUR","AUTHUR"],
+  Arcot: ["PANCHAYAT1","PANCHAYAT2"],
+  Kaveripakkam: ["P1","P2"],
+  Nemili: ["P1","P2"],
+  Sholingur: ["P1","P2"],
+  Thimiri: ["P1","P2"],
+  Walaja: ["P1","P2"]
+}
+
 const initialForm = {
   name: '',
   dob: '',
@@ -16,7 +26,8 @@ const initialForm = {
   college: '',
   shg_number: '',
   phone_number: '',
-  first_time_voter: ''
+  first_time_voter: '',
+  panchayat: '' // added
 }
 
 function calculateAge(dob) {
@@ -60,6 +71,17 @@ export default function UserDetails() {
 
   const handleChange = (e) => {
     const { name, value } = e.target
+
+    // reset panchayat when block changes
+    if (name === "block") {
+      setFormData(prev => ({
+        ...prev,
+        block: value,
+        panchayat: ''
+      }))
+      return
+    }
+
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
@@ -83,7 +105,6 @@ export default function UserDetails() {
       ...formData,
       age: Number(age),
       phone_number: phone,
-      panchayat: "Ranipet",
       first_time_voter: formData.first_time_voter === 'yes'
     }
 
@@ -112,6 +133,9 @@ export default function UserDetails() {
       setSubmitting(false)
     }
   }
+
+  // get panchayats based on selected block
+  const panchayatOptions = PANCHAYATS[formData.block] || []
 
   return (
     <div className="bg-[#f8f9fa] text-[#191c1d] min-h-screen flex flex-col">
@@ -329,6 +353,26 @@ export default function UserDetails() {
                   onChange={handleChange}
                   className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required />
               </div>
+
+              <div>
+                    <label className="text-xs sm:text-sm font-semibold text-[#001d44]">பஞ்சாயத்து / Panchayat</label>
+                    <select
+                      name="panchayat"
+                      value={formData.panchayat}
+                      onChange={handleChange}
+                      className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2"
+                      required
+                    >
+                      <option value="" disabled>Select Panchayat</option>
+                      {panchayatOptions.map((p, i) => (
+                        <option key={i} value={p}>{p}</option>
+                      ))}
+                    </select>
+                  </div>
+                </>
+              )}
+
+            </div>
 
             </div>
 
