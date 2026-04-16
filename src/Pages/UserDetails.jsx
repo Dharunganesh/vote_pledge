@@ -210,22 +210,40 @@ export default function UserDetails() {
               </div>
 
               {formData.area_type === 'rural' && (
-                <div>
-                  <label className="text-xs sm:text-sm font-semibold text-[#001d44]">பிளாக் / Block</label>
-                  <select name="block" value={formData.block}
-                    onChange={handleChange}
-                    className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required>
-                    <option value="" disabled>Select Block</option>
-                    <option>Arakkonam</option>
-                    <option>Arcot</option>
-                    <option>Kaveripakkam</option>
-                    <option>Nemili</option>
-                    <option>Sholingur</option>
-                    <option>Thimiri</option>
-                    <option>Walaja</option>
-                  </select>
-                </div>
-              )}
+                  <>
+                    <div>
+                      <label className="text-xs sm:text-sm font-semibold text-[#001d44]">பிளாக் / Block</label>
+                      <select name="block" value={formData.block}
+                        onChange={handleChange}
+                        className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required>
+                        <option value="" disabled>Select Block</option>
+                        <option>Arakkonam</option>
+                        <option>Arcot</option>
+                        <option>Kaveripakkam</option>
+                        <option>Nemili</option>
+                        <option>Sholingur</option>
+                        <option>Thimiri</option>
+                        <option>Walaja</option>
+                      </select>
+                    </div>
+                
+                    <div>
+                      <label className="text-xs sm:text-sm font-semibold text-[#001d44]">பஞ்சாயத்து / Panchayat</label>
+                      <select
+                        name="panchayat"
+                        value={formData.panchayat}
+                        onChange={handleChange}
+                        className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2"
+                        required
+                      >
+                        <option value="" disabled>Select Panchayat</option>
+                        {panchayatOptions.map((p, i) => (
+                          <option key={i} value={p}>{p}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </>
+                )}
 
               {formData.area_type === 'urban' && (
                 <div>
@@ -353,27 +371,6 @@ export default function UserDetails() {
                   onChange={handleChange}
                   className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required />
               </div>
-
-              <div>
-                    <label className="text-xs sm:text-sm font-semibold text-[#001d44]">பஞ்சாயத்து / Panchayat</label>
-                    <select
-                      name="panchayat"
-                      value={formData.panchayat}
-                      onChange={handleChange}
-                      className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2"
-                      required
-                    >
-                      <option value="" disabled>Select Panchayat</option>
-                      {panchayatOptions.map((p, i) => (
-                        <option key={i} value={p}>{p}</option>
-                      ))}
-                    </select>
-                  </div>
-                </>
-              )}
-
-            </div>
-
             </div>
 
             {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
