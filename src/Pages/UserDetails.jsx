@@ -15,7 +15,8 @@ const initialForm = {
   category: '',
   college: '',
   shg_number: '',
-  phone_number: ''
+  phone_number: '',
+  first_time_voter: ''
 }
 
 function calculateAge(dob) {
@@ -74,11 +75,16 @@ export default function UserDetails() {
       return setErrorMessage('Please fill all required fields')
     }
 
+    if (formData.category === 'College/Institution' && !formData.first_time_voter) {
+      return setErrorMessage('Please select if you are a first-time voter')
+    }
+
     const payload = {
       ...formData,
       age: Number(age),
       phone_number: phone,
-      panchayat: "Ranipet"
+      panchayat: "Ranipet",
+      first_time_voter: formData.first_time_voter === 'yes'
     }
 
     try {
@@ -204,9 +210,20 @@ export default function UserDetails() {
                     onChange={handleChange}
                     className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required>
                     <option value="" disabled>Select ULB</option>
-                    <option>Ranipet Municipality</option>
-                    <option>Arcot Municipality</option>
-                    <option>Walaja Municipality</option>
+                    <option>Ammoor TP</option>
+                    <option>Kalavai TP</option>
+                    <option>Kaveripakkam TP</option>
+                    <option>Nemili TP</option>
+                    <option>Panapakkam TP</option>
+                    <option>Thakkolam TP</option>
+                    <option>Thimiri TP</option>
+                    <option>Vilapakkam TP</option>
+                    <option>Arakkonam MP</option>
+                    <option>Arcot MP</option>
+                    <option>Melvisharam MP</option>
+                    <option>Ranipet MP</option>
+                    <option>Sholinghur MP</option>
+                    <option>Wallajah MP</option>
                   </select>
                 </div>
               )}
@@ -240,16 +257,47 @@ export default function UserDetails() {
               </div>
 
               {formData.category === 'College/Institution' && (
-                <div>
-                  <label className="text-xs sm:text-sm font-semibold text-[#001d44]">கல்லூரி பெயர் / College Name</label>
-                  <input
-                    name="college"
-                    value={formData.college}
-                    onChange={handleChange}
-                    className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2"
-                    required
-                  />
-                </div>
+                <>
+                  <div>
+                    <label className="text-xs sm:text-sm font-semibold text-[#001d44]">கல்லூரி பெயர் / College Name</label>
+                    <input
+                      name="college"
+                      value={formData.college}
+                      onChange={handleChange}
+                      className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
+                      முதல் முறையாக வாக்களிப்பவரா? / First Time Voter?
+                    </label>
+                    <div className="flex gap-6 mt-2">
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="first_time_voter"
+                          value="yes"
+                          checked={formData.first_time_voter === 'yes'}
+                          onChange={handleChange}
+                        />
+                        ஆம் / Yes
+                      </label>
+
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="first_time_voter"
+                          value="no"
+                          checked={formData.first_time_voter === 'no'}
+                          onChange={handleChange}
+                        />
+                        இல்லை / No
+                      </label>
+                    </div>
+                  </div>
+                </>
               )}
 
               {formData.category === 'SHG Members' && (
