@@ -16,19 +16,7 @@ const initialForm = {
   college: '',
   shg_number: '',
   phone_number: '',
-  first_time_voter: '',
-  panchayat: ''
-}
-
-// 🔥 Block → Panchayat mapping (sample)
-const panchayatData = {
-  Arakkonam: ["Ammanoor", "Kainoor", "Melpakkam"],
-  Arcot: ["Anathangal", "Arumbakkam", "Pudupadi"],
-  Kaveripakkam: ["Alapakkam", "Banavaram", "Ocheri"],
-  Nemili: ["Agavalam", "Arigilapadi", "Velithangi"],
-  Sholingur: ["Akkachikuppam", "Govindacheri", "Velam"],
-  Thimiri: ["Agaram", "Aroor", "Mosur"],
-  Walaja: ["Anandalai", "Bagaveli", "Lalapet"]
+  first_time_voter: ''
 }
 
 function calculateAge(dob) {
@@ -70,20 +58,8 @@ export default function UserDetails() {
 
   const age = calculateAge(formData.dob)
 
-  const panchayatOptions = panchayatData[formData.block] || []
-
   const handleChange = (e) => {
     const { name, value } = e.target
-
-    if (name === "block") {
-      setFormData(prev => ({
-        ...prev,
-        block: value,
-        panchayat: ''
-      }))
-      return
-    }
-
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
@@ -103,14 +79,11 @@ export default function UserDetails() {
       return setErrorMessage('Please select if you are a first-time voter')
     }
 
-    if (formData.area_type === 'rural' && !formData.panchayat) {
-      return setErrorMessage('Please select panchayat')
-    }
-
     const payload = {
       ...formData,
       age: Number(age),
       phone_number: phone,
+      panchayat: "Ranipet",
       first_time_voter: formData.first_time_voter === 'yes'
     }
 
@@ -146,34 +119,79 @@ export default function UserDetails() {
 
       <main className="grow pt-5 lg:pt-5 sm:pt-24 pb-28 px-3 sm:px-6 md:px-8 md:py-5 max-w-5xl mx-auto w-full">
 
-        <button
-          className='bg-orange-600 px-5 text-white py-2 rounded-full mb-2'
-          onClick={() => navigate("/")}
-        >
-          Back
-        </button>
+        <div>
+          <button
+            className='bg-orange-600 w-max px-5 text-sm text-white py-2 rounded-full mb-1 hover:bg-orange-700'
+            onClick={() => navigate("/")}
+          >
+            Back
+          </button>
+        </div>
 
-        <div className="bg-white p-6 rounded-2xl shadow">
+        <div className="mb-8 sm:mb-12 lg:mb-3 text-center sm:text-left">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-orange-600 leading-tight">
+            உங்கள் விவரங்களை <br />
+            <span className="text-lg sm:text-xl md:text-2xl opacity-80">
+              Confirm Your Details
+            </span>
+          </h1>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="grid md:grid-cols-2 gap-5">
+          <p className="text-[#43474f] mt-3 lg:mt-1 max-w-2xl text-sm sm:text-base md:text-lg mx-auto sm:mx-0">
+            வாக்காளர் உறுதிமொழி ஏற்பதற்கு முன் உங்கள் விவரங்கள் சரியாக இருப்பதை உறுதி செய்யவும்.
+          </p>
+        </div>
 
-              <input name="name" value={formData.name} onChange={handleChange} placeholder="Name" required />
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-10 shadow">
 
-              <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
+          <form className="space-y-6 sm:space-y-8" onSubmit={handleSubmit}>
 
-              <input value={age} readOnly placeholder="Age" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
 
-              <select name="area_type" value={formData.area_type} onChange={handleChange} required>
-                <option value="">Select Type</option>
-                <option value="rural">Rural</option>
-                <option value="urban">Urban</option>
-              </select>
+              <div>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">பெயர் / Name</label>
+                <input name="name" value={formData.name}
+                  onChange={handleChange}
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required />
+              </div>
+
+              <div>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">பிறந்த தேதி / Date of Birth</label>
+                <input type="date" name="dob"
+                  value={formData.dob}
+                  onChange={handleChange}
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required />
+              </div>
+
+              <div>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">வயது / Age</label>
+                <input value={age} readOnly className="w-full bg-gray-200 p-3 sm:p-4 rounded-xl mt-2" />
+              </div>
+
+              <div>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">மாவட்டம் / District</label>
+                <div className="bg-gray-200 p-3 sm:p-4 rounded-xl mt-2 font-bold">
+                  Ranipet
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">கிராமம் / நகரம் (Rural / Urban)</label>
+                <select name="area_type" value={formData.area_type}
+                  onChange={handleChange}
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required>
+                  <option value="" disabled>Select Type</option>
+                  <option value="rural">Rural</option>
+                  <option value="urban">Urban</option>
+                </select>
+              </div>
 
               {formData.area_type === 'rural' && (
-                <>
-                  <select name="block" value={formData.block} onChange={handleChange} required>
-                    <option value="">Select Block</option>
+                <div>
+                  <label className="text-xs sm:text-sm font-semibold text-[#001d44]">பிளாக் / Block</label>
+                  <select name="block" value={formData.block}
+                    onChange={handleChange}
+                    className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required>
+                    <option value="" disabled>Select Block</option>
                     <option>Arakkonam</option>
                     <option>Arcot</option>
                     <option>Kaveripakkam</option>
@@ -182,61 +200,155 @@ export default function UserDetails() {
                     <option>Thimiri</option>
                     <option>Walaja</option>
                   </select>
-
-                  {formData.block && (
-                    <select name="panchayat" value={formData.panchayat} onChange={handleChange} required>
-                      <option value="">Select Panchayat</option>
-                      {panchayatOptions.map((p, i) => (
-                        <option key={i}>{p}</option>
-                      ))}
-                    </select>
-                  )}
-                </>
+                </div>
               )}
 
               {formData.area_type === 'urban' && (
-                <select name="ulb" value={formData.ulb} onChange={handleChange} required>
-                  <option value="">Select ULB</option>
-                  <option>Ranipet MP</option>
-                </select>
+                <div>
+                  <label className="text-xs sm:text-sm font-semibold text-[#001d44]">நகராட்சி / ULB</label>
+                  <select name="ulb" value={formData.ulb}
+                    onChange={handleChange}
+                    className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required>
+                    <option value="" disabled>Select ULB</option>
+                    <option>Ammoor TP</option>
+                    <option>Kalavai TP</option>
+                    <option>Kaveripakkam TP</option>
+                    <option>Nemili TP</option>
+                    <option>Panapakkam TP</option>
+                    <option>Thakkolam TP</option>
+                    <option>Thimiri TP</option>
+                    <option>Vilapakkam TP</option>
+                    <option>Arakkonam MP</option>
+                    <option>Arcot MP</option>
+                    <option>Melvisharam MP</option>
+                    <option>Ranipet MP</option>
+                    <option>Sholinghur MP</option>
+                    <option>Wallajah MP</option>
+                  </select>
+                </div>
               )}
 
-              <select name="constituency" value={formData.constituency} onChange={handleChange} required>
-                <option value="">Select Constituency</option>
-                <option>Ranipet</option>
-              </select>
+              <div>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">சட்டமன்ற தொகுதி / Assembly Constituency</label>
+                <select name="constituency" value={formData.constituency}
+                  onChange={handleChange}
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required>
+                  <option value="" disabled>Select Constituency</option>
+                  <option>Arakkonam</option>
+                  <option>Sholingur</option>
+                  <option>Ranipet</option>
+                  <option>Arcot</option>
+                  <option>Katpadi</option>
+                </select>
+              </div>
 
-              <select name="category" value={formData.category} onChange={handleChange} required>
-                <option value="">Select Category</option>
-                <option value="College/Institution">College</option>
-                <option value="General Public">Public</option>
-              </select>
+              <div>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">வகை / Category</label>
+                <select name="category" value={formData.category}
+                  onChange={handleChange}
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required>
+                  <option value="" disabled>Select Category</option>
+                  <option value="College/Institution">College/Institution</option>
+                  <option value="General Public">General Public</option>
+                  <option value="SHG Members">SHG Members</option>
+                  <option value="Industries Employee">Industries Employee</option>
+                  <option value="Government Employees">Government Employees</option>
+                </select>
+              </div>
 
               {formData.category === 'College/Institution' && (
                 <>
-                  <input name="college" value={formData.college} onChange={handleChange} placeholder="College" required />
+                  <div>
+                    <label className="text-xs sm:text-sm font-semibold text-[#001d44]">கல்லூரி பெயர் / College Name</label>
+                    <input
+                      name="college"
+                      value={formData.college}
+                      onChange={handleChange}
+                      className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2"
+                      required
+                    />
+                  </div>
 
-                  <select name="first_time_voter" value={formData.first_time_voter} onChange={handleChange} required>
-                    <option value="">First Time Voter?</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </select>
+                  <div>
+                    <label className="text-xs sm:text-sm font-semibold text-[#001d44]">
+                      முதல் முறையாக வாக்களிப்பவரா? / First Time Voter?
+                    </label>
+                    <div className="flex gap-6 mt-2">
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="first_time_voter"
+                          value="yes"
+                          checked={formData.first_time_voter === 'yes'}
+                          onChange={handleChange}
+                        />
+                        ஆம் / Yes
+                      </label>
+
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="first_time_voter"
+                          value="no"
+                          checked={formData.first_time_voter === 'no'}
+                          onChange={handleChange}
+                        />
+                        இல்லை / No
+                      </label>
+                    </div>
+                  </div>
                 </>
               )}
 
-              <select name="gender" value={formData.gender} onChange={handleChange} required>
-                <option value="">Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
+              {formData.category === 'SHG Members' && (
+                <div>
+                  <label className="text-xs sm:text-sm font-semibold text-[#001d44]">சுய உதவி குழு எண் / SHG Number</label>
+                  <input name="shg_number"
+                    value={formData.shg_number}
+                    onChange={handleChange}
+                    className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" />
+                </div>
+              )}
 
-              <input name="phone_number" value={formData.phone_number} onChange={handleChange} placeholder="Phone" required />
+              <div>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">பாலினம் / Gender</label>
+                <select name="gender" value={formData.gender}
+                  onChange={handleChange}
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required>
+                  <option value="" disabled>Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="transgender">Transgender</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="text-xs sm:text-sm font-semibold text-[#001d44]">தொலைபேசி எண் / Phone Number</label>
+                <input name="phone_number"
+                  value={formData.phone_number}
+                  onChange={handleChange}
+                  className="w-full bg-gray-100 p-3 sm:p-4 rounded-xl mt-2" required />
+              </div>
 
             </div>
 
-            <button type="submit">
-              {submitting ? 'Saving...' : 'Continue'}
-            </button>
+            {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
+            {successMessage && <p className="text-green-500 text-sm">{successMessage}</p>}
+
+            <div className="mt-6 sm:mt-8 flex justify-center sm:justify-end">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="w-full sm:w-auto sm:min-w-[200px] md:min-w-[240px] 
+                           bg-orange-600 text-white px-6 py-3 sm:py-4 
+                           rounded-xl text-sm sm:text-base md:text-lg 
+                           font-semibold shadow 
+                           hover:bg-orange-700 active:scale-95 
+                           transition-all duration-200"
+              >
+                {submitting ? 'Saving...' : 'Continue'}
+              </button>
+            </div>
 
           </form>
         </div>
