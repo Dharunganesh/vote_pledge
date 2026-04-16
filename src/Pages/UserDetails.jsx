@@ -69,7 +69,6 @@ export default function UserDetails() {
     if (!phone) return setErrorMessage('Enter valid phone number')
     if (!age || Number(age) < 18) return setErrorMessage('Age must be 18+')
 
-    // Basic required dropdown validation
     if (!formData.area_type || !formData.constituency || !formData.category || !formData.gender) {
       return setErrorMessage('Please fill all required fields')
     }
@@ -110,7 +109,6 @@ export default function UserDetails() {
 
         <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-xl shadow">
 
-          {/* Name */}
           <div>
             <label>பெயர் / Name</label>
             <input name="name" value={formData.name}
@@ -118,43 +116,38 @@ export default function UserDetails() {
               className="w-full p-3 bg-gray-100 mt-2 rounded" required />
           </div>
 
-          {/* DOB */}
           <div>
-            <label>Date of Birth / பிறந்த தேதி</label>
+            <label>பிறந்த தேதி / Date of Birth</label>
             <input type="date" name="dob"
               value={formData.dob}
               onChange={handleChange}
               className="w-full p-3 bg-gray-100 mt-2 rounded" required />
           </div>
 
-          {/* Age */}
           <div>
-            <label>Age / வயது</label>
+            <label>வயது / Age</label>
             <input value={age} readOnly className="w-full p-3 bg-gray-200 mt-2 rounded" />
           </div>
 
-          {/* District */}
           <div>
-            <label>District / மாவட்டம்</label>
+            <label>மாவட்டம் / District</label>
             <input value="Ranipet" readOnly className="w-full p-3 bg-gray-200 mt-2 rounded" />
           </div>
 
-          {/* Rural / Urban */}
           <div>
-            <label>Rural / Urban</label>
+            <label>கிராமம் / நகரம் (Rural / Urban)</label>
             <select name="area_type" value={formData.area_type}
               onChange={handleChange}
               className="w-full p-3 bg-gray-100 mt-2 rounded" required>
-              <option value="" disabled>Select Type</option>
+              <option value="" disabled>வகையை தேர்வு செய்யவும் / Select Type</option>
               <option value="rural">Rural</option>
               <option value="urban">Urban</option>
             </select>
           </div>
 
-          {/* Block */}
           {formData.area_type === 'rural' && (
             <div>
-              <label>Block</label>
+              <label>பிளாக் / Block</label>
               <select name="block" value={formData.block}
                 onChange={handleChange}
                 className="w-full p-3 bg-gray-100 mt-2 rounded" required>
@@ -170,10 +163,9 @@ export default function UserDetails() {
             </div>
           )}
 
-          {/* ULB */}
           {formData.area_type === 'urban' && (
             <div>
-              <label>ULB</label>
+              <label>நகராட்சி / ULB</label>
               <select name="ulb" value={formData.ulb}
                 onChange={handleChange}
                 className="w-full p-3 bg-gray-100 mt-2 rounded" required>
@@ -185,15 +177,13 @@ export default function UserDetails() {
             </div>
           )}
 
-          {/* Panchayat */}
           <div>
-            <label>Panchayat Name</label>
+            <label>பஞ்சாயத்து பெயர் / Panchayat Name</label>
             <input value="Ranipet" readOnly className="w-full p-3 bg-gray-200 mt-2 rounded" />
           </div>
 
-          {/* Constituency */}
           <div>
-            <label>Assembly Constituency</label>
+            <label>சட்டமன்ற தொகுதி / Assembly Constituency</label>
             <select name="constituency" value={formData.constituency}
               onChange={handleChange}
               className="w-full p-3 bg-gray-100 mt-2 rounded" required>
@@ -206,62 +196,57 @@ export default function UserDetails() {
             </select>
           </div>
 
-          {/* Category */}
           <div>
-            <label>Category</label>
+            <label>வகை / Category</label>
             <select name="category" value={formData.category}
               onChange={handleChange}
               className="w-full p-3 bg-gray-100 mt-2 rounded" required>
-              <option value="" disabled>Select Category</option>
-              <option>College/Institution</option>
-              <option>General Public</option>
-              <option>SHG Members</option>
-              <option>Industries Employee</option>
-              <option>Government Employees</option>
+              <option value="" disabled>வகையை தேர்வு செய்யவும் / Select Category</option>
+              <option value="College/Institution">கல்லூரி / College/Institution</option>
+              <option value="General Public">பொது மக்கள் / General Public</option>
+              <option value="SHG Members">சுய உதவி குழு / SHG Members</option>
+              <option value="Industries Employee">தொழிற்சாலை ஊழியர்கள் / Industries Employee</option>
+              <option value="Government Employees">அரசு ஊழியர்கள் / Government Employees</option>
             </select>
           </div>
 
-          {/* College */}
           {formData.category === 'College/Institution' && (
             <div>
-              <label>Select College</label>
-              <select name="college" value={formData.college}
+              <label>கல்லூரி பெயர் / College Name</label>
+              <input
+                type="text"
+                name="college"
+                value={formData.college}
                 onChange={handleChange}
-                className="w-full p-3 bg-gray-100 mt-2 rounded">
-                <option value="" disabled>Select College</option>
-                <option>SRM University</option>
-                <option>VIT</option>
-                <option>Loyola College</option>
-              </select>
+                className="w-full p-3 bg-gray-100 mt-2 rounded"
+                required
+              />
             </div>
           )}
 
-          {/* SHG */}
           {formData.category === 'SHG Members' && (
             <div>
-              <label>SHG Number</label>
+              <label>சுய உதவி குழு எண் / SHG Number</label>
               <input name="shg_number" value={formData.shg_number}
                 onChange={handleChange}
                 className="w-full p-3 bg-gray-100 mt-2 rounded" />
             </div>
           )}
 
-          {/* Gender */}
           <div>
-            <label>Gender</label>
+            <label>பாலினம் / Gender</label>
             <select name="gender" value={formData.gender}
               onChange={handleChange}
               className="w-full p-3 bg-gray-100 mt-2 rounded" required>
-              <option value="" disabled>Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="transgender">Transgender</option>
+              <option value="" disabled>பாலினத்தை தேர்வு செய்யவும் / Select Gender</option>
+              <option value="male">ஆண் / Male</option>
+              <option value="female">பெண் / Female</option>
+              <option value="transgender">திருநங்கை / Transgender</option>
             </select>
           </div>
 
-          {/* Phone */}
           <div>
-            <label>Phone</label>
+            <label>தொலைபேசி எண் / Phone Number</label>
             <input name="phone_number"
               value={formData.phone_number}
               onChange={handleChange}
