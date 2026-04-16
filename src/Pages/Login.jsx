@@ -46,7 +46,7 @@ function Login() {
                         className='w-full mt-4 bg-orange-600 text-white py-4 rounded-xl font-semibold md:mb-5'
                         onClick={handleEnter}
                     >
-                        உள்ள்நுழைக / Enter
+                        உள்நுழைக / Enter
                     </button>
 
                     <div className='w-full px-5 mt-10 mb-4 sm:mt-15 md:mt-1 lg:mt-0'>
