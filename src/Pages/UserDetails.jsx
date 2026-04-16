@@ -449,7 +449,7 @@ export default function UserDetails() {
 
         <div className="mb-8 sm:mb-12 lg:mb-3 text-center sm:text-left">
           <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-orange-600 leading-tight">
-            உங்கள் விவரங்களை <br />
+            உங்கள் விவரங்களை சமர்ப்பிக்கவும் <br />
             <span className="text-lg sm:text-xl md:text-2xl opacity-80">
               Confirm Your Details
             </span>
