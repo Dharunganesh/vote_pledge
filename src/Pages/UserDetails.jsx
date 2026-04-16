@@ -8,7 +8,7 @@ const initialForm = {
   dob: '',
   gender: 'male',
   district: 'Ranipet',
-  area_type: 'rural', // rural or urban
+  area_type: 'rural',
   block: 'Arakkonam',
   ulb: '',
   panchayat: '',
@@ -29,9 +29,7 @@ function calculateAge(dob) {
     today.getMonth() < birthDate.getMonth() ||
     (today.getMonth() === birthDate.getMonth() &&
       today.getDate() < birthDate.getDate())
-  ) {
-    age--
-  }
+  ) age--
 
   return age >= 0 ? String(age) : ''
 }
@@ -101,7 +99,7 @@ export default function UserDetails() {
 
       navigate("/pledge", {
         state: {
-          phone: phone,
+          phone,
           name: formData.name
         }
       })
@@ -118,7 +116,6 @@ export default function UserDetails() {
       <Navbar />
 
       <main className="pt-20 pb-24 px-4 max-w-5xl mx-auto">
-
         <h1 className="text-3xl font-bold text-orange-600 mb-6">
           உங்கள் விவரங்கள் / Your Details
         </h1>
@@ -126,106 +123,147 @@ export default function UserDetails() {
         <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-xl shadow">
 
           {/* Name */}
-          <input name="name" placeholder="Name"
-            value={formData.name} onChange={handleChange}
-            className="w-full p-3 bg-gray-100 rounded" required />
+          <div>
+            <label className="font-semibold">பெயர் / Name</label>
+            <input name="name" value={formData.name} onChange={handleChange}
+              className="w-full p-3 bg-gray-100 rounded mt-2" required />
+          </div>
 
           {/* DOB */}
-          <input type="date" name="dob"
-            value={formData.dob} onChange={handleChange}
-            className="w-full p-3 bg-gray-100 rounded" required />
+          <div>
+            <label className="font-semibold">பிறந்த தேதி / Date of Birth</label>
+            <input type="date" name="dob" value={formData.dob}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-100 rounded mt-2" required />
+          </div>
 
           {/* Age */}
-          <input value={age} readOnly className="w-full p-3 bg-gray-200 rounded" />
+          <div>
+            <label className="font-semibold">வயது / Age</label>
+            <input value={age} readOnly className="w-full p-3 bg-gray-200 rounded mt-2" />
+          </div>
 
           {/* District */}
-          <input value="Ranipet" readOnly className="w-full p-3 bg-gray-200 rounded" />
+          <div>
+            <label className="font-semibold">மாவட்டம் / District</label>
+            <input value="Ranipet" readOnly className="w-full p-3 bg-gray-200 rounded mt-2" />
+          </div>
 
-          {/* Rural / Urban */}
-          <select name="area_type" value={formData.area_type} onChange={handleChange}
-            className="w-full p-3 bg-gray-100 rounded">
-            <option value="rural">Rural</option>
-            <option value="urban">Urban</option>
-          </select>
-
-          {/* Block (Rural) */}
-          {formData.area_type === 'rural' && (
-            <select name="block" value={formData.block} onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded">
-              <option>Arakkonam</option>
-              <option>Arcot</option>
-              <option>Kaveripakkam</option>
-              <option>Nemili</option>
-              <option>Sholingur</option>
-              <option>Thimiri</option>
-              <option>Walaja</option>
+          {/* Rural/Urban */}
+          <div>
+            <label className="font-semibold">Rural / Urban</label>
+            <select name="area_type" value={formData.area_type} onChange={handleChange}
+              className="w-full p-3 bg-gray-100 rounded mt-2">
+              <option value="rural">Rural</option>
+              <option value="urban">Urban</option>
             </select>
+          </div>
+
+          {/* Block */}
+          {formData.area_type === 'rural' && (
+            <div>
+              <label className="font-semibold">Block</label>
+              <select name="block" value={formData.block} onChange={handleChange}
+                className="w-full p-3 bg-gray-100 rounded mt-2">
+                <option>Arakkonam</option>
+                <option>Arcot</option>
+                <option>Kaveripakkam</option>
+                <option>Nemili</option>
+                <option>Sholingur</option>
+                <option>Thimiri</option>
+                <option>Walaja</option>
+              </select>
+            </div>
           )}
 
-          {/* ULB (Urban) */}
+          {/* ULB */}
           {formData.area_type === 'urban' && (
-            <input name="ulb" placeholder="ULB"
-              value={formData.ulb} onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded" />
+            <div>
+              <label className="font-semibold">ULB</label>
+              <input name="ulb" value={formData.ulb} onChange={handleChange}
+                className="w-full p-3 bg-gray-100 rounded mt-2" />
+            </div>
           )}
 
           {/* Panchayat */}
-          <input name="panchayat" placeholder="Panchayat Name"
-            value={formData.panchayat} onChange={handleChange}
-            className="w-full p-3 bg-gray-100 rounded" required />
+          <div>
+            <label className="font-semibold">Panchayat Name</label>
+            <input name="panchayat" value={formData.panchayat}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-100 rounded mt-2" required />
+          </div>
 
           {/* Constituency */}
-          <select name="constituency" value={formData.constituency} onChange={handleChange}
-            className="w-full p-3 bg-gray-100 rounded">
-            <option>Arakkonam</option>
-            <option>Sholingur</option>
-            <option>Ranipet</option>
-            <option>Arcot</option>
-            <option>Katpadi</option>
-          </select>
+          <div>
+            <label className="font-semibold">Assembly Constituency</label>
+            <select name="constituency" value={formData.constituency}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-100 rounded mt-2">
+              <option>Arakkonam</option>
+              <option>Sholingur</option>
+              <option>Ranipet</option>
+              <option>Arcot</option>
+              <option>Katpadi</option>
+            </select>
+          </div>
 
           {/* Category */}
-          <select name="category" value={formData.category} onChange={handleChange}
-            className="w-full p-3 bg-gray-100 rounded">
-            <option>College/Institution</option>
-            <option>General Public</option>
-            <option>SHG Members</option>
-            <option>Industries Employee</option>
-            <option>Government Employees</option>
-          </select>
+          <div>
+            <label className="font-semibold">Category</label>
+            <select name="category" value={formData.category}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-100 rounded mt-2">
+              <option>College/Institution</option>
+              <option>General Public</option>
+              <option>SHG Members</option>
+              <option>Industries Employee</option>
+              <option>Government Employees</option>
+            </select>
+          </div>
 
           {/* College */}
           {formData.category === 'College/Institution' && (
-            <input name="college" placeholder="Select College"
-              value={formData.college} onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded" />
+            <div>
+              <label className="font-semibold">College</label>
+              <input name="college" value={formData.college}
+                onChange={handleChange}
+                className="w-full p-3 bg-gray-100 rounded mt-2" />
+            </div>
           )}
 
           {/* SHG */}
           {formData.category === 'SHG Members' && (
-            <input name="shg_number" placeholder="SHG Number"
-              value={formData.shg_number} onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded" />
+            <div>
+              <label className="font-semibold">SHG Number</label>
+              <input name="shg_number" value={formData.shg_number}
+                onChange={handleChange}
+                className="w-full p-3 bg-gray-100 rounded mt-2" />
+            </div>
           )}
 
           {/* Gender */}
-          <select name="gender" value={formData.gender} onChange={handleChange}
-            className="w-full p-3 bg-gray-100 rounded">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="transgender">Transgender</option>
-          </select>
+          <div>
+            <label className="font-semibold">Gender</label>
+            <select name="gender" value={formData.gender}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-100 rounded mt-2">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="transgender">Transgender</option>
+            </select>
+          </div>
 
           {/* Phone */}
-          <input name="phone_number" placeholder="Phone"
-            value={formData.phone_number} onChange={handleChange}
-            className="w-full p-3 bg-gray-100 rounded" required />
+          <div>
+            <label className="font-semibold">Phone Number</label>
+            <input name="phone_number" value={formData.phone_number}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-100 rounded mt-2" required />
+          </div>
 
-          {/* Messages */}
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           {successMessage && <p className="text-green-500">{successMessage}</p>}
 
-          {/* Submit */}
           <button type="submit" disabled={submitting}
             className="w-full bg-orange-600 text-white p-3 rounded">
             {submitting ? 'Saving...' : 'Continue'}
