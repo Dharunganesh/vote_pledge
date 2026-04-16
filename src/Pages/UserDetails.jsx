@@ -4,7 +4,7 @@ import Navbar from '../Components/Navbar'
 import { supabase } from '../supabaseClient'
 
 const PANCHAYATS = {
-  ARAKONAM: [
+  Arakonam: [
 "AMBARISHIPURAM",
 "AMMANOOR",
 "ANAIKATAPUTHUR",
@@ -48,7 +48,7 @@ const PANCHAYATS = {
 "VEDAL",
 "VELUR"
 ],
-  ARCOT: [
+  Arcot: [
 "ANATHANGAL",
 "ARAPAKKAM",
 "ARUMBAKKAM",
@@ -89,7 +89,7 @@ const PANCHAYATS = {
 "VELUR",
 "VEPOOR"
 ],
-  KAVERIPAKKAM: [
+  Kaveripakkam: [
 "ALAPAKKAM",
 "ATHIPATTU",
 "AVALOOR",
@@ -120,7 +120,7 @@ const PANCHAYATS = {
 "UTHIRAMPATTU",
 "VEGAMANGALAM"
 ],
-  NEMILI: [
+  Nemili: [
 "AGAVALAM",
 "ARIGILAPADI",
 "ARUMBAKKAM",
@@ -169,7 +169,7 @@ const PANCHAYATS = {
 "VEPPERI",
 "VETTANGULAM"
 ],
-  SHOLINGHUR: [
+  Sholinghur: [
 "AKKACHIKUPPAM",
 "AYAL",
 "AYPEDU",
@@ -211,7 +211,7 @@ const PANCHAYATS = {
 "VENGUPATTU",
 "VENKATAPURAM"
 ],
-  THIMIRI: [
+  Thimiri: [
 "AGARAM",
 "ALLALACHERI",
 "ANAIMALLUR",
@@ -268,7 +268,7 @@ const PANCHAYATS = {
 "VENKATAPURAM",
 "VILARI"
 ],
-  WALAJAH: [
+  Walajah: [
 "ANANDALAI",
 "BAGAVELI",
 "CHENNASAMUDRAM",
