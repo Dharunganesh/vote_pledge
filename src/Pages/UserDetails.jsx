@@ -6,14 +6,13 @@ import { supabase } from '../supabaseClient'
 const initialForm = {
   name: '',
   dob: '',
-  gender: 'male',
+  gender: '',
   district: 'Ranipet',
-  area_type: 'rural',
-  block: 'Arakkonam',
+  area_type: '',
+  block: '',
   ulb: '',
-  panchayat: '',
-  constituency: 'Arakkonam',
-  category: 'General Public',
+  constituency: '',
+  category: '',
   college: '',
   shg_number: '',
   phone_number: ''
@@ -45,9 +44,8 @@ export default function UserDetails() {
   const navigate = useNavigate()
 
   const [formData, setFormData] = useState(initialForm)
-  const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
-  const [successMessage, setSuccessMessage] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
     const savedPhone = localStorage.getItem("phone")
@@ -68,26 +66,24 @@ export default function UserDetails() {
 
     const phone = normalizePhoneNumber(formData.phone_number)
 
-    if (!phone) {
-      setErrorMessage('Enter valid phone number')
-      return
-    }
+    if (!phone) return setErrorMessage('Enter valid phone number')
+    if (!age || Number(age) < 18) return setErrorMessage('Age must be 18+')
 
-    if (!age || Number(age) < 18) {
-      setErrorMessage('Age must be 18+')
-      return
+    // Basic required dropdown validation
+    if (!formData.area_type || !formData.constituency || !formData.category || !formData.gender) {
+      return setErrorMessage('Please fill all required fields')
     }
 
     const payload = {
       ...formData,
       age: Number(age),
-      phone_number: phone
+      phone_number: phone,
+      panchayat: "Ranipet"
     }
 
     try {
       setSubmitting(true)
       setErrorMessage('')
-      setSuccessMessage('')
 
       const { error } = await supabase
         .from('voters')
@@ -95,13 +91,8 @@ export default function UserDetails() {
 
       if (error) throw error
 
-      setSuccessMessage('Saved successfully ✅')
-
       navigate("/pledge", {
-        state: {
-          phone,
-          name: formData.name
-        }
+        state: { phone, name: formData.name }
       })
 
     } catch (err) {
@@ -116,44 +107,45 @@ export default function UserDetails() {
       <Navbar />
 
       <main className="pt-20 pb-24 px-4 max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold text-orange-600 mb-6">
-          உங்கள் விவரங்கள் / Your Details
-        </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-xl shadow">
 
           {/* Name */}
           <div>
-            <label className="font-semibold">பெயர் / Name</label>
-            <input name="name" value={formData.name} onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded mt-2" required />
+            <label>பெயர் / Name</label>
+            <input name="name" value={formData.name}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-100 mt-2 rounded" required />
           </div>
 
           {/* DOB */}
           <div>
-            <label className="font-semibold">பிறந்த தேதி / Date of Birth</label>
-            <input type="date" name="dob" value={formData.dob}
+            <label>Date of Birth / பிறந்த தேதி</label>
+            <input type="date" name="dob"
+              value={formData.dob}
               onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded mt-2" required />
+              className="w-full p-3 bg-gray-100 mt-2 rounded" required />
           </div>
 
           {/* Age */}
           <div>
-            <label className="font-semibold">வயது / Age</label>
-            <input value={age} readOnly className="w-full p-3 bg-gray-200 rounded mt-2" />
+            <label>Age / வயது</label>
+            <input value={age} readOnly className="w-full p-3 bg-gray-200 mt-2 rounded" />
           </div>
 
           {/* District */}
           <div>
-            <label className="font-semibold">மாவட்டம் / District</label>
-            <input value="Ranipet" readOnly className="w-full p-3 bg-gray-200 rounded mt-2" />
+            <label>District / மாவட்டம்</label>
+            <input value="Ranipet" readOnly className="w-full p-3 bg-gray-200 mt-2 rounded" />
           </div>
 
-          {/* Rural/Urban */}
+          {/* Rural / Urban */}
           <div>
-            <label className="font-semibold">Rural / Urban</label>
-            <select name="area_type" value={formData.area_type} onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded mt-2">
+            <label>Rural / Urban</label>
+            <select name="area_type" value={formData.area_type}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-100 mt-2 rounded" required>
+              <option value="" disabled>Select Type</option>
               <option value="rural">Rural</option>
               <option value="urban">Urban</option>
             </select>
@@ -162,9 +154,11 @@ export default function UserDetails() {
           {/* Block */}
           {formData.area_type === 'rural' && (
             <div>
-              <label className="font-semibold">Block</label>
-              <select name="block" value={formData.block} onChange={handleChange}
-                className="w-full p-3 bg-gray-100 rounded mt-2">
+              <label>Block</label>
+              <select name="block" value={formData.block}
+                onChange={handleChange}
+                className="w-full p-3 bg-gray-100 mt-2 rounded" required>
+                <option value="" disabled>Select Block</option>
                 <option>Arakkonam</option>
                 <option>Arcot</option>
                 <option>Kaveripakkam</option>
@@ -179,26 +173,31 @@ export default function UserDetails() {
           {/* ULB */}
           {formData.area_type === 'urban' && (
             <div>
-              <label className="font-semibold">ULB</label>
-              <input name="ulb" value={formData.ulb} onChange={handleChange}
-                className="w-full p-3 bg-gray-100 rounded mt-2" />
+              <label>ULB</label>
+              <select name="ulb" value={formData.ulb}
+                onChange={handleChange}
+                className="w-full p-3 bg-gray-100 mt-2 rounded" required>
+                <option value="" disabled>Select ULB</option>
+                <option>Ranipet Municipality</option>
+                <option>Arcot Municipality</option>
+                <option>Walaja Municipality</option>
+              </select>
             </div>
           )}
 
           {/* Panchayat */}
           <div>
-            <label className="font-semibold">Panchayat Name</label>
-            <input name="panchayat" value={formData.panchayat}
-              onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded mt-2" required />
+            <label>Panchayat Name</label>
+            <input value="Ranipet" readOnly className="w-full p-3 bg-gray-200 mt-2 rounded" />
           </div>
 
           {/* Constituency */}
           <div>
-            <label className="font-semibold">Assembly Constituency</label>
+            <label>Assembly Constituency</label>
             <select name="constituency" value={formData.constituency}
               onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded mt-2">
+              className="w-full p-3 bg-gray-100 mt-2 rounded" required>
+              <option value="" disabled>Select Constituency</option>
               <option>Arakkonam</option>
               <option>Sholingur</option>
               <option>Ranipet</option>
@@ -209,10 +208,11 @@ export default function UserDetails() {
 
           {/* Category */}
           <div>
-            <label className="font-semibold">Category</label>
+            <label>Category</label>
             <select name="category" value={formData.category}
               onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded mt-2">
+              className="w-full p-3 bg-gray-100 mt-2 rounded" required>
+              <option value="" disabled>Select Category</option>
               <option>College/Institution</option>
               <option>General Public</option>
               <option>SHG Members</option>
@@ -224,29 +224,35 @@ export default function UserDetails() {
           {/* College */}
           {formData.category === 'College/Institution' && (
             <div>
-              <label className="font-semibold">College</label>
-              <input name="college" value={formData.college}
+              <label>Select College</label>
+              <select name="college" value={formData.college}
                 onChange={handleChange}
-                className="w-full p-3 bg-gray-100 rounded mt-2" />
+                className="w-full p-3 bg-gray-100 mt-2 rounded">
+                <option value="" disabled>Select College</option>
+                <option>SRM University</option>
+                <option>VIT</option>
+                <option>Loyola College</option>
+              </select>
             </div>
           )}
 
           {/* SHG */}
           {formData.category === 'SHG Members' && (
             <div>
-              <label className="font-semibold">SHG Number</label>
+              <label>SHG Number</label>
               <input name="shg_number" value={formData.shg_number}
                 onChange={handleChange}
-                className="w-full p-3 bg-gray-100 rounded mt-2" />
+                className="w-full p-3 bg-gray-100 mt-2 rounded" />
             </div>
           )}
 
           {/* Gender */}
           <div>
-            <label className="font-semibold">Gender</label>
+            <label>Gender</label>
             <select name="gender" value={formData.gender}
               onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded mt-2">
+              className="w-full p-3 bg-gray-100 mt-2 rounded" required>
+              <option value="" disabled>Select Gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="transgender">Transgender</option>
@@ -255,14 +261,14 @@ export default function UserDetails() {
 
           {/* Phone */}
           <div>
-            <label className="font-semibold">Phone Number</label>
-            <input name="phone_number" value={formData.phone_number}
+            <label>Phone</label>
+            <input name="phone_number"
+              value={formData.phone_number}
               onChange={handleChange}
-              className="w-full p-3 bg-gray-100 rounded mt-2" required />
+              className="w-full p-3 bg-gray-100 mt-2 rounded" required />
           </div>
 
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-          {successMessage && <p className="text-green-500">{successMessage}</p>}
 
           <button type="submit" disabled={submitting}
             className="w-full bg-orange-600 text-white p-3 rounded">
