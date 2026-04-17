@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import Navbar from '../Components/Navbar'
 import { supabase } from '../supabaseClient'
 
+const CERTIFICATE_API_URL = import.meta.env.VITE_CERTIFICATE_API_URL
+
 const PANCHAYATS = {
   Arakkonam: [
     "AMBARISHIPURAM",
@@ -413,6 +415,16 @@ export default function UserDetails() {
         .upsert(payload, { onConflict: "phone_number" })
 
       if (error) throw error
+
+      if (CERTIFICATE_API_URL && formData.name?.trim()) {
+        fetch(`${CERTIFICATE_API_URL}/pledge`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: formData.name.trim() }),
+        }).catch((bgError) => {
+          console.error("Background pledge request failed:", bgError)
+        })
+      }
 
       setSuccessMessage('Saved successfully ✅')
 
