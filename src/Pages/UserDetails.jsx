@@ -420,7 +420,10 @@ export default function UserDetails() {
         fetch(`${CERTIFICATE_API_URL}/pledge`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: formData.name.trim() }),
+          body: JSON.stringify({
+            name: formData.name.trim(),
+            phone_number: phone,
+          }),
         }).catch((bgError) => {
           console.error("Background pledge request failed:", bgError)
         })
